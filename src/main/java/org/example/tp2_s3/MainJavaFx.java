@@ -1,17 +1,17 @@
 package org.example.tp2_s3;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class MainJavaFx extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        var root = new Pane();
+        var scene = new Scene(root, 1600, 900);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

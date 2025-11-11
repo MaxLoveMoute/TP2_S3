@@ -26,7 +26,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'org.example.tp2_s3'
-    mainClass = 'org.example.tp2_s3.HelloApplication'
+    mainClass = 'org.example.tp2_s3.MainJavaFx'
 }
 
 javafx {
