@@ -1,4 +1,11 @@
 package org.example.tp2_s3;
 
-public class Journal {
+import javafx.geometry.Point2D;
+
+public class Journal extends ObjetEnMouvement {
+
+    public Journal(Point2D position, Point2D taille, Point2D vitesse, Point2D acceleration) {
+        super(position, taille, vitesse, acceleration);
+
+    }
 }

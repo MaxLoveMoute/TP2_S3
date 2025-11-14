@@ -3,21 +3,29 @@ package org.example.tp2_s3;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class ObjetStatique extends ObjetDuJeu{
+public abstract class ObjetStatique extends ObjetDuJeu{
 
-    public ObjetStatique(Point2D position){
+    private boolean AInterragi = false;
 
+    public ObjetStatique (Point2D position, Point2D taille) {
+        super(position, taille);
     }
-
-
-
 
     /**
      * Dessine l'objet sur l'écran.
      *
      * À redéfinir dans les sous-classes.
      */
-    public void draw(GraphicsContext context) {
-        //todo
-    }
+    public abstract void draw(GraphicsContext context);
+
+
+    /**
+     * Définit les interactions de l'objet avec les journaux.
+     *
+     * À redéfinir dans les sous-classes.
+     */
+    public abstract void interact ();
+
+
+
 }

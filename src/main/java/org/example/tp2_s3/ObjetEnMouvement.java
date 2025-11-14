@@ -8,7 +8,11 @@ public class ObjetEnMouvement extends ObjetDuJeu {
     protected Point2D velocite = Point2D.ZERO;
     protected Point2D acceleration = new Point2D(0, 600);
 
-
+    public ObjetEnMouvement(Point2D position, Point2D taille, Point2D velocite, Point2D acceleration) {
+        super(position, taille);
+        this.velocite = velocite;
+        this.acceleration = acceleration;
+    }
 
     /**
      * Met à jour la vitesse selon l'accélération et
