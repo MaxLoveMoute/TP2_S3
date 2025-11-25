@@ -5,12 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
 public class Camelot extends ObjetEnMouvement {
-    protected Point2D position;
-    protected Point2D taille = new Point2D(120, 60);
+    //todo ajouter l'inventaire
 
-    // Physique
-    protected Point2D velocite = new Point2D(400, 0);
-    protected Point2D acceleration;
     protected boolean toucheLeSol;
 
     protected static KeyCode toucheGauche = KeyCode.LEFT;
@@ -19,10 +15,10 @@ public class Camelot extends ObjetEnMouvement {
 
     protected static KeyCode toucheUP = KeyCode.UP;
 
-    public Camelot(Point2D position, Point2D taille, Point2D velocite, Point2D acceleration) {
-        super(position, taille, velocite, acceleration);
+    public Camelot() {
+        super(new Point2D(0, 0), new Point2D(120, 60), new Point2D(400, 0), new Point2D(0, 0));
         toucheLeSol = true;
-        //todo mettre maybe des valeurs deja initialisés (genre mettons velocité 0)
+        //todo mettre les bonnes valeurs d'initialisation
     }
 
     public void update(double deltaTemps) {
@@ -30,8 +26,7 @@ public class Camelot extends ObjetEnMouvement {
         boolean droite = Input.isKeyPressed(toucheDroite);
 
 
-
-            // --- Contrôle clavier pour les autres personnages ---
+            // --- Contrôle clavier pour Camelot ---
             if (gauche) {
                 velocite = new Point2D(-300, velocite.getY());
             }
