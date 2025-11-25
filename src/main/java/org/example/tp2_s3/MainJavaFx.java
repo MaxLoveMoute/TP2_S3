@@ -1,5 +1,6 @@
 package org.example.tp2_s3;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -22,11 +23,25 @@ public class MainJavaFx extends Application {
         var context = canvas.getGraphicsContext2D();
 
 
+        /*
+        var timer = new AnimationTimer() {
+            long dernierTemps = System.nanoTime();
+            @Override
+            public void handle(long temps) {
+                double deltaTemps = (temps - dernierTemps) * 1e-9;
+                partie.update(deltaTemps);
+                partie.draw(context);
+                dernierTemps = temps;
+            }
+        };
+        timer.start();
+         */
+
 
 
 
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Animations 5");
+        primaryStage.setTitle("Jeu Camelot");
         primaryStage.show();
     }
 
