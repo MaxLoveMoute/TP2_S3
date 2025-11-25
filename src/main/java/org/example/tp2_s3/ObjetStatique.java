@@ -11,6 +11,7 @@ public abstract class ObjetStatique extends ObjetDuJeu{
         super(position, taille);
     }
 
+
     /**
      * Dessine l'objet sur l'écran.
      *

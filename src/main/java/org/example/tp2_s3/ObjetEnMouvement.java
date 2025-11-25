@@ -3,10 +3,10 @@ package org.example.tp2_s3;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class ObjetEnMouvement extends ObjetDuJeu {
+public abstract class ObjetEnMouvement extends ObjetDuJeu {
     // Physique
-    protected Point2D velocite = Point2D.ZERO;
-    protected Point2D acceleration = new Point2D(0, 600);
+    protected Point2D velocite;
+    protected Point2D acceleration;
 
     public ObjetEnMouvement(Point2D position, Point2D taille, Point2D velocite, Point2D acceleration) {
         super(position, taille);
@@ -33,7 +33,11 @@ public class ObjetEnMouvement extends ObjetDuJeu {
     } //todo ajouter le reste dans chaque classe indiv
 
 
-    public void draw(GraphicsContext context) {
+    /**
+     * Dessine l'objet sur l'écran.
+     *
+     * À redéfinir dans les sous-classes.
+     */
+    public abstract void draw(GraphicsContext context);
 
-    }
 }

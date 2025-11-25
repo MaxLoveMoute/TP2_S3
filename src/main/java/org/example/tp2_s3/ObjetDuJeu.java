@@ -3,7 +3,7 @@ package org.example.tp2_s3;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class ObjetDuJeu {
+public abstract class ObjetDuJeu extends Object implements Drawable {
     // position
     protected Point2D position;
     protected Point2D taille;
@@ -20,12 +20,9 @@ public abstract class ObjetDuJeu {
      *
      * À redéfinir dans les sous-classes.
      */
+
+    @Override
     public abstract void draw(GraphicsContext context);
-
-
-
-
-
 
 
 
