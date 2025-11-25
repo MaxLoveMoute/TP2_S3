@@ -2,6 +2,8 @@ package org.example.tp2_s3;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
 public class Camelot extends ObjetEnMouvement {
@@ -15,6 +17,15 @@ public class Camelot extends ObjetEnMouvement {
 
     protected static KeyCode toucheUP = KeyCode.UP;
 
+    protected double TempsTotal = 0;
+
+    protected ImageView CamelotImage;
+
+    protected Image img1 = new Image(getClass().getResourceAsStream("/camelot1.png"));
+
+    protected Image img2 = new Image(getClass().getResourceAsStream("/camelot2.png"));
+
+
     public Camelot() {
         super(new Point2D(0, 0), new Point2D(120, 60), new Point2D(400, 0), new Point2D(0, 0));
         toucheLeSol = true;
@@ -24,6 +35,18 @@ public class Camelot extends ObjetEnMouvement {
     public void update(double deltaTemps) {
         boolean gauche = Input.isKeyPressed(toucheGauche);
         boolean droite = Input.isKeyPressed(toucheDroite);
+
+        TempsTotal += deltaTemps;
+
+        double anim = (TempsTotal * 4) % 2;
+
+        if(anim < 1) {
+            CamelotImage.setImage(img1);
+        } else {
+            CamelotImage.setImage(img2);
+        }
+
+
 
 
             // --- Contrôle clavier pour Camelot ---
