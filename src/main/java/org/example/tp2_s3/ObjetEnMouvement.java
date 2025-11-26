@@ -40,7 +40,8 @@ public abstract class ObjetEnMouvement extends ObjetDuJeu {
      *
      * À redéfinir dans les sous-classes.
      */
-    public abstract void draw(GraphicsContext context);
+    @Override
+    public abstract void draw(GraphicsContext context,Camera camera);
 
 }
 

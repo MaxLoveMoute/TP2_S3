@@ -11,44 +11,36 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-public class ArrierePlan implements Drawable {
-    private double tailleImageX = 192, tailleImageY = 96;
+public class ArrierePlan {
+    private Point2D tailleBrique = new Point2D(192, 96);
     private Image imageBrique = new Image(getClass().getResourceAsStream("/brique.png"));
 
-    private Image imageBriqueTotal;
+    private double positionMurEnX = 0;
+    private Point2D velociteMur = new Point2D(0,0); // vitesse visuelle de base du décor
 
-    public ArrierePlan() {
-        imageBriqueTotal = creerArrierePlan();
+    public void update(double vitesseCamera, double deltaTemps) {
+        // vitesse relative décor / caméra
+        double vitesseRelative = velociteMur.getX() - vitesseCamera;
+        positionMurEnX += -vitesseRelative * deltaTemps;
+
+        positionMurEnX %= tailleBrique.getX();
+        if (positionMurEnX < 0){
+            positionMurEnX += tailleBrique.getX();
+        }
     }
 
-    public Image creerArrierePlan() {
 
-        // Créer un canvas temporaire où on va dessiner le fond
-        Canvas canvasTemp = new Canvas(MainJavaFx.WIDTH, MainJavaFx.HEIGHT);
-        GraphicsContext gc = canvasTemp.getGraphicsContext2D();
+    public void draw(GraphicsContext context) {
 
-        // Remplir l’arrière-plan en noir (comme ton draw)
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, MainJavaFx.WIDTH, MainJavaFx.HEIGHT);
+        int nbX = (int)Math.ceil(MainJavaFx.WIDTH / tailleBrique.getX()) + 2;
+        int nbY = (int)Math.ceil(MainJavaFx.HEIGHT / tailleBrique.getY());
 
-        // Calcul du nombre de briques
-        int nbX = (int) Math.ceil(MainJavaFx.WIDTH / tailleImageX);
-        int nbY = (int) Math.ceil(MainJavaFx.HEIGHT / tailleImageY);
-
-        // Dessin des briques
-        for (int j = 0; j < nbX; j++) {
-            for (int i = 0; i < nbY; i++) {
-                gc.drawImage(imageBrique, j * tailleImageX, i * tailleImageY);
+        for (int i = 0; i < nbY; i++) {
+            for (int j = 0; j < nbX; j++) {
+                double x = j * tailleBrique.getX() - positionMurEnX;
+                double y = i * tailleBrique.getY();
+                context.drawImage(imageBrique, x, y);
             }
         }
-
-        // Conversion du Canvas en Image
-        return canvasTemp.snapshot(null, null);
-    }
-
-    @Override
-    public void draw(GraphicsContext context) {
-        // Maintenant, on dessine juste l'image complète
-        context.drawImage(imageBriqueTotal, 0, 0);
     }
 }

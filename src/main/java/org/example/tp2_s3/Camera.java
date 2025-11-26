@@ -6,36 +6,29 @@ import javafx.geometry.Point2D;
 
 public class Camera {
 
-    private double positionEnX; // Position de la caméra dans le monde
-    private double width;       // Largeur de la caméra (taille de l'écran)
+    private double positionEnX;
+    private double widthEcran;
 
+    private Point2D velociteDeCamera;
 
-
-    // Hauteur de la caméra (taille de l'écran)
-
-    public Camera(double width) {
-        this.width = width;
-        this.positionEnX = 0 - 0.20*width ; // La caméra commence centrée sur le début du Camelot
+    public Camera(double widthEcran) {
+        this.widthEcran = widthEcran;
+        this.positionEnX = 0;
+        this.velociteDeCamera = new Point2D(0, 0);
     }
 
-    /**
-     * Met à jour la position de la caméra pour suivre le Camelot uniquement en X
-     */
     public void suivre(Camelot camelot) {
-        // On centre la caméra sur le début de l'image du Camelot
-        this.positionEnX = camelot.getGauche()-0.20*width;
 
-        // Limites horizontales pour ne pas sortir du monde
-        if (positionEnX > MainJavaFx.WIDTH - width) {
-            positionEnX = MainJavaFx.WIDTH - width;
-        }
+        velociteDeCamera = new Point2D(camelot.getVelociteX(), 0);
+        positionEnX = camelot.getGauche() - widthEcran * 0.2;
     }
-
-    public double coordoEcran(double positionMondeX) {
-        return positionMondeX-(positionEnX);
+    public double coordoEcran(double positionCamelotX){
+        return positionCamelotX - positionEnX;
     }
 
 
 
-
+    public double getVelociteDeCameraX() {
+        return velociteDeCamera.getX();
+    }
 }
