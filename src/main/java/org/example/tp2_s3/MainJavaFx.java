@@ -21,21 +21,24 @@ public class MainJavaFx extends Application {
         var canvas = new Canvas(WIDTH, HEIGHT);
         root.getChildren().add(canvas);
         var context = canvas.getGraphicsContext2D();
+        Camelot camelot = new Camelot();
 
 
-        /*
+
+
+
+
         var timer = new AnimationTimer() {
             long dernierTemps = System.nanoTime();
             @Override
             public void handle(long temps) {
                 double deltaTemps = (temps - dernierTemps) * 1e-9;
-                partie.update(deltaTemps);
-                partie.draw(context);
+                camelot.update(deltaTemps);
+                camelot.draw(context);
                 dernierTemps = temps;
             }
         };
         timer.start();
-         */
 
 
 
@@ -50,18 +53,13 @@ public class MainJavaFx extends Application {
     }
 
 
-
-    public void sceneAccueil () {
+    public void sceneAccueil() {
         //todo changer le stage
     }
 
-    public void sceneJeux () {
+    public void sceneJeux() {
         //todo changer le stage
     }
-
-
-
-
 
 
 }

@@ -30,8 +30,11 @@ public class Camelot extends ObjetEnMouvement {
         super(new Point2D(0, 0), new Point2D(120, 60), new Point2D(400, 0), new Point2D(0, 0));
         toucheLeSol = true;
         //todo mettre les bonnes valeurs d'initialisation
+        CamelotImage = new ImageView(img1);
     }
 
+
+    @Override
     public void update(double deltaTemps) {
         boolean gauche = Input.isKeyPressed(toucheGauche);
         boolean droite = Input.isKeyPressed(toucheDroite);
@@ -90,6 +93,13 @@ public class Camelot extends ObjetEnMouvement {
 
     @Override
     public void draw(GraphicsContext context) {
-
+        context.drawImage(
+                CamelotImage.getImage(),
+                position.getX(),
+                position.getY(),
+                taille.getX(),
+                taille.getY()
+        );
     }
+
 }
