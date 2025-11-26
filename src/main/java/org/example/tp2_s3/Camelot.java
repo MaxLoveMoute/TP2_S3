@@ -7,12 +7,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 public class Camelot extends ObjetEnMouvement {
     //todo ajouter l'inventaire
     protected boolean toucheLeSol;
     protected static KeyCode toucheGauche = KeyCode.LEFT;
     protected static KeyCode toucheDroite = KeyCode.RIGHT;
     protected static KeyCode toucheUP = KeyCode.UP;
+
+    protected static KeyCode toucheLancerJournalVersHaut = KeyCode.Z;
+    protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
     protected double TempsTotal = 0;
     protected ImageView CamelotImage;
     protected Image img1 = new Image(getClass().getResourceAsStream("/camelot1.png"));
