@@ -15,7 +15,7 @@ public class Camera {
 
     public Camera(double width) {
         this.width = width;
-        this.positionEnX = 0; // La caméra commence centrée sur le début du Camelot
+        this.positionEnX = 0 - 0.20*width ; // La caméra commence centrée sur le début du Camelot
     }
 
     /**
@@ -23,7 +23,7 @@ public class Camera {
      */
     public void suivre(Camelot camelot) {
         // On centre la caméra sur le début de l'image du Camelot
-        this.positionEnX = camelot.getGauche();
+        this.positionEnX = camelot.getGauche()-0.20*width;
 
         // Limites horizontales pour ne pas sortir du monde
         if (positionEnX > MainJavaFx.WIDTH - width) {
