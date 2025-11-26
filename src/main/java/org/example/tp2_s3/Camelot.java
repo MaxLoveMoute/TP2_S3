@@ -14,7 +14,9 @@ public class Camelot extends ObjetEnMouvement {
     protected boolean toucheLeSol;
     protected static KeyCode toucheGauche = KeyCode.LEFT;
     protected static KeyCode toucheDroite = KeyCode.RIGHT;
-    protected static KeyCode toucheUP = KeyCode.UP;
+    protected static KeyCode toucheUP1 = KeyCode.UP;
+
+    protected static KeyCode toucheUP2 = KeyCode.SPACE;
 
     protected static KeyCode toucheLancerJournalVersHaut = KeyCode.Z;
     protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
@@ -64,7 +66,7 @@ public class Camelot extends ObjetEnMouvement {
 
 
         // Saut
-        boolean jump = Input.isKeyPressed(KeyCode.SPACE) || Input.isKeyPressed(toucheUP);
+        boolean jump = Input.isKeyPressed(toucheUP2) || Input.isKeyPressed(toucheUP1);
         if (toucheLeSol && jump) {
             velocite = new Point2D(velocite.getX(), -500);
             toucheLeSol = false;
