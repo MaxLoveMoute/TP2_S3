@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 
 public class Camelot extends ObjetEnMouvement {
     //todo ajouter l'inventaire
@@ -17,6 +18,9 @@ public class Camelot extends ObjetEnMouvement {
 
     protected static KeyCode toucheUP = KeyCode.UP;
 
+    protected static KeyCode toucheVersHaut = KeyCode.Z;
+
+    protected static KeyCode toucheVersSol = KeyCode.X;
     protected double TempsTotal = 0;
 
     protected ImageView CamelotImage;
@@ -27,7 +31,7 @@ public class Camelot extends ObjetEnMouvement {
 
 
     public Camelot() {
-        super(new Point2D(0, 0), new Point2D(120, 60), new Point2D(400, 0), new Point2D(0, 0));
+        super(new Point2D(MainJavaFx.HEIGHT, MainJavaFx.WIDTH/2), new Point2D(174, 144), new Point2D(400, 0), new Point2D(0, 0));
         toucheLeSol = true;
         //todo mettre les bonnes valeurs d'initialisation
         CamelotImage = new ImageView(img1);
@@ -54,20 +58,32 @@ public class Camelot extends ObjetEnMouvement {
 
             // --- Contrôle clavier pour Camelot ---
             if (gauche) {
-                velocite = new Point2D(-300, velocite.getY());
+                if(velocite.getX() > 200) {
+                    acceleration = new Point2D(-300, velocite.getY());
+                }else {
+                    acceleration = new Point2D(0, velocite.getY());
+                }
             }
             else if (droite) {
-                velocite = new Point2D(+300, velocite.getY());
+                if(velocite.getX() < 600) {
+                    acceleration = new Point2D(+300, velocite.getY());
+                }else {
+                    acceleration = new Point2D(0, velocite.getY());
+                }
+            }else{
+                    if(velocite.getX() > 400) {
+                        velocite = new Point2D(-300, velocite.getY());
+                    }else if(velocite.getX() < 400) {
+                        velocite = new Point2D(300, velocite.getY());
+                    }
             }
-            else {
-                velocite = new Point2D(0, velocite.getY());
-            }
+
 
             boolean jump = Input.isKeyPressed(KeyCode.SPACE)
                     || Input.isKeyPressed(toucheUP);
 
             if (toucheLeSol && jump) {
-                velocite = new Point2D(velocite.getX(), -300);
+                acceleration = new Point2D(velocite.getX(), -1500);
                 toucheLeSol = false;
             }
 
@@ -93,13 +109,22 @@ public class Camelot extends ObjetEnMouvement {
 
     @Override
     public void draw(GraphicsContext context) {
+        // Clear the canvas
+        // Clear and fill background
+        context.clearRect(0, 0, MainJavaFx.WIDTH, MainJavaFx.HEIGHT);
+        context.setFill(Color.BLACK);
+        context.fillRect(0, 0, MainJavaFx.WIDTH, MainJavaFx.HEIGHT);
+
+        // Dessiner Camelot en position relative à la caméra
         context.drawImage(
                 CamelotImage.getImage(),
-                position.getX(),
+              position.getX(),
                 position.getY(),
                 taille.getX(),
                 taille.getY()
         );
     }
+
+
 
 }

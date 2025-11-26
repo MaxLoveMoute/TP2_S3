@@ -12,6 +12,9 @@ public class Partie {
     private ArrayList<ObjetStatique> objetsStatiques = new ArrayList<ObjetStatique>();
 
 
+
+
+
     Partie() { // On crée les objets pour une partie
         camelot = new Camelot();
         for (int i = 0; i < flocons.length; i++) {
@@ -63,5 +66,7 @@ public class Partie {
         }
 
     }
+
+
 
 }
