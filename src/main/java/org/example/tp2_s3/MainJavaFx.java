@@ -22,8 +22,7 @@ public class MainJavaFx extends Application {
         var canvas = new Canvas(WIDTH, HEIGHT);
         root.getChildren().add(canvas);
         var context = canvas.getGraphicsContext2D();
-        Camelot camelot = new Camelot();
-        context.setFill(Color.BLACK);
+        Partie partie = new Partie();
 
 
 
@@ -37,8 +36,8 @@ public class MainJavaFx extends Application {
             @Override
             public void handle(long temps) {
                 double deltaTemps = (temps - dernierTemps) * 1e-9;
-                camelot.update(deltaTemps);
-                camelot.draw(context);
+                partie.update(deltaTemps);
+                partie.draw(context);
                 dernierTemps = temps;
             }
         };
