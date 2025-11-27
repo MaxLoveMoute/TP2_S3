@@ -1,15 +1,10 @@
 package org.example.tp2_s3;
 
-import com.sun.tools.javac.Main;
+
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
 public class ArrierePlan {
     private Point2D tailleBrique = new Point2D(192, 96);

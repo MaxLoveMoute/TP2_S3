@@ -1,5 +1,6 @@
 package org.example.tp2_s3;
 
+import com.sun.tools.javac.Main;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -17,7 +18,9 @@ public class Porte extends ObjetStatique {
 
     @Override
     public void draw(GraphicsContext context,Camera camera) {
+        for (int i = 0; i < MainJavaFx.WIDTH; i+= 1300) {
 
+        }
     }
 
     @Override
