@@ -3,11 +3,15 @@ package org.example.tp2_s3;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
+import javax.swing.text.html.ImageView;
+
 public abstract class ObjetDuJeu extends Object implements Drawable {
     // position
     protected Point2D position;
     protected Point2D taille;
 
+    //affichage
+    protected ImageView image;
 
 
     public ObjetDuJeu(Point2D position, Point2D taille) {

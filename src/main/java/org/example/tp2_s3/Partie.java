@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Partie {
@@ -14,54 +15,64 @@ public class Partie {
 
     Partie() { // On crée les objets pour une partie
         camelot = new Camelot();
-        for (int i = 0; i < flocons.length; i++) {
-            Random rnd = new Random();
-            int choix = rnd.nextInt(3);
-
-            switch (choix) {
-                case 0 -> flocons[i] = new Flocon();
-                case 1 -> flocons[i] = new Grele();
-                case 2 -> flocons[i] = new FloconOscillant();
-            }
-        }
+        initialiserObjStatiques();
 
     }
     public void update(double deltaTemps) {
         camelot.update(deltaTemps);
-        for (var flocon : flocons) {
-            flocon.update(deltaTemps);
+        for (var objEnMouvement : objetsEnMouvement) {
+            objEnMouvement.update(deltaTemps);
         }
+
+
         // Tester les collisions
-        for (var flocon : flocons) {
-            double xFloc = flocon.position.getX();
-            double xFlocMax = flocon.position.getX() + flocon.taille.getX();
-            double xPerso = camelot.position.getX();
-            double xPersoMax = camelot.position.getX() + camelot.taille.getX();
+        ArrayList<ObjetEnMouvement> journauxASupprimer = new ArrayList<ObjetEnMouvement>();
 
-            if (xFlocMax > xPerso && xFloc < xPersoMax) {
-                double yFloc = flocon.position.getY();
-                double yFlocMax = flocon.position.getY() + flocon.taille.getY();
-                double yPerso = camelot.position.getY();
-                double yPersoMax = camelot.position.getY() + camelot.taille.getY();
+        for (var objStatique : objetsStatiques) {
+            Iterator<ObjetEnMouvement> it = objetsEnMouvement.iterator();
+            while (it.hasNext()) {
+                ObjetEnMouvement objEnMouvement = it.next();
 
-                if (yFlocMax > yPerso && yFloc < yPersoMax) {
-                    flocon.collisionAvecSol();
+                if (testColision(objStatique, objEnMouvement)) {
+                    it.remove(); // supprime objEnMouvement de la liste objetsEnMouvement
+                    objStatique.interact(); //va faire l'action que l'objet statique fait selon son type
                 }
             }
 
         }
-        // Autres : vérifie si on a gagné/perdu, ...
-        //todo ________________________________________________________________________________________
+
+
+        //todo Autres : vérifie si on a gagné/perdu, ... ______________________________________________________________________
     }
     public void draw(GraphicsContext context) {
-        for (var personnage : personnages) {
-            personnage.update(deltaTemps);
+        for (var objStatique : objetsStatiques) {
+            objStatique.draw(context);
         }
 
-        for (var flocon : flocons) {
-            flocon.update(deltaTem);
+        for (var objEnMouvement : objetsEnMouvement) {
+            objEnMouvement.draw(context);
         }
 
+        camelot.draw(context);
+
+    }
+
+    public void initialiserObjStatiques() {
+        //todo va initialiser les portes, fenetres etc
+    }
+
+    public boolean testColision(ObjetStatique objStatique, ObjetEnMouvement objEnMouvement) {
+        boolean colision = false;
+        if ((objStatique.getGauche() <= objEnMouvement.getDroite()) &&
+                (objStatique.getDroite() >= objEnMouvement.getGauche()))  {
+            if ((objStatique.getHaut() <= objEnMouvement.getBas()) &&
+                    (objStatique.getBas() >= objEnMouvement.getHaut())) {
+                colision = true;
+            }
+
+        }
+
+        return colision;
     }
 
 }

@@ -23,7 +23,7 @@ public class MainJavaFx extends Application {
         var context = canvas.getGraphicsContext2D();
 
 
-        /*
+        var partie = new Partie();
         var timer = new AnimationTimer() {
             long dernierTemps = System.nanoTime();
             @Override
@@ -35,7 +35,6 @@ public class MainJavaFx extends Application {
             }
         };
         timer.start();
-         */
 
 
 
@@ -48,7 +47,6 @@ public class MainJavaFx extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 
 
     public void sceneAccueil () {
