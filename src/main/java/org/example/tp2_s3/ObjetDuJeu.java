@@ -26,7 +26,7 @@ public abstract class ObjetDuJeu extends Object implements Drawable {
      */
 
     @Override
-    public abstract void draw(GraphicsContext context);
+    public abstract void draw(GraphicsContext context,Camera camera);
 
 
 

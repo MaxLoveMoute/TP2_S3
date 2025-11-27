@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,16 +22,23 @@ public class MainJavaFx extends Application {
         var canvas = new Canvas(WIDTH, HEIGHT);
         root.getChildren().add(canvas);
         var context = canvas.getGraphicsContext2D();
+        Camelot camelot = new Camelot();
+        context.setFill(Color.BLACK);
 
 
-        var partie = new Partie();
+
+
+
+
+
+
         var timer = new AnimationTimer() {
             long dernierTemps = System.nanoTime();
             @Override
             public void handle(long temps) {
                 double deltaTemps = (temps - dernierTemps) * 1e-9;
-                partie.update(deltaTemps);
-                partie.draw(context);
+                camelot.update(deltaTemps);
+                camelot.draw(context);
                 dernierTemps = temps;
             }
         };
@@ -49,17 +57,13 @@ public class MainJavaFx extends Application {
     }
 
 
-    public void sceneAccueil () {
+    public void sceneAccueil() {
         //todo changer le stage
     }
 
-    public void sceneJeux () {
+    public void sceneJeux() {
         //todo changer le stage
     }
-
-
-
-
 
 
 }

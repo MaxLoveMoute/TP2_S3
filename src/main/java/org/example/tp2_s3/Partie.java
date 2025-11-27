@@ -13,6 +13,9 @@ public class Partie {
     private ArrayList<ObjetStatique> objetsStatiques = new ArrayList<ObjetStatique>();
 
 
+
+
+
     Partie() { // On crée les objets pour une partie
         camelot = new Camelot();
         initialiserObjStatiques();
@@ -74,5 +77,7 @@ public class Partie {
 
         return colision;
     }
+
+
 
 }

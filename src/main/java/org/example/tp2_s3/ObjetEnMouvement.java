@@ -33,11 +33,15 @@ public abstract class ObjetEnMouvement extends ObjetDuJeu {
     } //todo ajouter le reste dans chaque classe indiv
 
 
+
+
     /**
      * Dessine l'objet sur l'écran.
      *
      * À redéfinir dans les sous-classes.
      */
-    public abstract void draw(GraphicsContext context);
+    @Override
+    public abstract void draw(GraphicsContext context,Camera camera);
 
 }
+
