@@ -13,7 +13,6 @@ public class Partie {
     Random aleatoire = new Random();
     private ArrayList<ObjetEnMouvement> journaux = new ArrayList<ObjetEnMouvement>();
     private ArrayList<Maison> maisons = new ArrayList<Maison>();
-
     protected static KeyCode toucheLancerJournalVersHaut = KeyCode.Z;
     protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
     protected static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
@@ -23,6 +22,10 @@ public class Partie {
     private Camelot camelot;
     private double masseDesJournaux;
     private ArrierePlan arrierePlan;
+
+    private Inventaire inventaire;
+
+
 
 
 
@@ -73,6 +76,7 @@ public class Partie {
         context.clearRect(0, 0, MainJavaFx.WIDTH, MainJavaFx.HEIGHT);
 
         arrierePlan.draw(context, camera);
+        inventaire.draw(context);
 
         for (var maison : maisons) {
             maison.draw(context, camera);
@@ -88,11 +92,20 @@ public class Partie {
 
     public void initialiserMaisons() {
         int chiffrePorte = aleatoire.nextInt(851) + 100;
+        ArrayList<Integer> numeroDePorteAbonne = new ArrayList<>();
 
         for (int i = 1300; i < 13 * 1300; i += 1300) {
-            maisons.add(new Maison(i, chiffrePorte));
+            Maison maisonTemps = new Maison(i,chiffrePorte);
+            maisons.add(maisonTemps);
+            if(maisonTemps.isMaisonAbonner()){
+                numeroDePorteAbonne.add(chiffrePorte);
+            }
             chiffrePorte += 2;
         }
+
+
+        inventaire = new Inventaire(12,0,numeroDePorteAbonne);
+
 
     }
 

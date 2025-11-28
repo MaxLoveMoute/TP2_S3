@@ -54,4 +54,8 @@ public class Maison implements Drawable {
     public ArrayList<ObjetStatique> getObjetsMaison() {
         return objetsMaison;
     }
+
+    public boolean isMaisonAbonner() {
+        return maisonAbonner;
+    }
 }

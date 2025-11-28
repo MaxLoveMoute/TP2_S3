@@ -59,4 +59,13 @@ public class Inventaire {
             intitialisationDeEmplacementPorte += 50;
         }
     }
+
+    public void additionOuSoustractionDeDollar(int nbDollar){
+        argent += nbDollar;
+    }
+    public void additionOuSoustractionDeJournal(int nbJournal){
+        journal += nbJournal;
+    }
+
+
 }

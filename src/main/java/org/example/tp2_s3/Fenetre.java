@@ -27,9 +27,9 @@ public class Fenetre extends ObjetStatique {
     @Override
     public void interact() {
         if (maisonAbonner) {
-            fenetreCourante = fenetreVerte;
-        }else{
             fenetreCourante = fenetreRouge;
+        }else{
+            fenetreCourante = fenetreVerte;
         }
 
     }
