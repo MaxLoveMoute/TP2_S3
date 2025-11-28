@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 
 
 public class Porte extends ObjetStatique {
+    public static final int LARGEUR = 143;
 
     protected Image imgPorte = new Image("/porte.png");
 
@@ -16,7 +17,7 @@ public class Porte extends ObjetStatique {
     protected boolean maisonAbonner;
 
     public Porte(Point2D position, int chiffreDePorte,boolean maisonAbonner) {
-        super(position,new Point2D(143,195));
+        super(position,new Point2D(LARGEUR, 195));
         this.chiffreDePorte = chiffreDePorte;
         this.maisonAbonner = maisonAbonner;
     }
