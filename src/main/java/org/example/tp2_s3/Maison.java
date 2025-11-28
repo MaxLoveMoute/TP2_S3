@@ -13,8 +13,7 @@ public class Maison implements Drawable {
 
     public Maison(int position, int chiffrePorte) {
 
-
-        objetsMaison.add(new Porte(new Point2D(position,0), chiffrePorte, maisonAbonner));
+        objetsMaison.add(new Porte(new Point2D(position,MainJavaFx.HEIGHT), chiffrePorte, maisonAbonner));
 
         int estIlAbonner = aleatoire.nextInt(2);
 
@@ -44,6 +43,8 @@ public class Maison implements Drawable {
 
     @Override
     public void draw(GraphicsContext context, Camera camera) {
+
+
         for (ObjetStatique objetDeMaison : objetsMaison) {
             objetDeMaison.draw(context, camera);
         }
