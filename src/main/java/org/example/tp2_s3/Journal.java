@@ -2,9 +2,12 @@ package org.example.tp2_s3;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Journal extends ObjetEnMouvement {
+    protected Image imgJournal = new Image("/porte.png");
+
     protected static double masse;
 
     public Journal(Point2D position, Point2D vitesse, double masse) {
@@ -26,7 +29,7 @@ public class Journal extends ObjetEnMouvement {
 
     @Override
     public void draw(GraphicsContext context, Camera camera) {
-
+        context.drawImage(imgJournal, camera.coordoEcran( position.getX()), position.getY());
     }
 
     public static double getMasse() {

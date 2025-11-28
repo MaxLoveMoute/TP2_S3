@@ -147,7 +147,6 @@ public class Partie {
 
             j.setVelocite(j.getVelocite().add(momentumAAjouter.multiply(1/j.getMasse())));
             dernierTempsJournalCree = maintenant;
-
         }
 
 
