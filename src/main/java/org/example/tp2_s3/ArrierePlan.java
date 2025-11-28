@@ -20,6 +20,7 @@ public class ArrierePlan implements Drawable {
     @Override
     public void draw(GraphicsContext context, Camera camera) {
         context.setFill(Color.BLACK);
+        context.fillRect(0,0,WORLD_WIDTH,MainJavaFx.HEIGHT);
 
         int nbX = (int)Math.ceil( WORLD_WIDTH / tailleBrique.getX()) + 2;
         int nbY = (int)Math.ceil(MainJavaFx.HEIGHT / tailleBrique.getY());
