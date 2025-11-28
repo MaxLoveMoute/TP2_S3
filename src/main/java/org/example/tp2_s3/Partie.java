@@ -19,8 +19,10 @@ public class Partie {
     protected static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
 
     private long dernierTempsJournalCree = 0;
+    private Camera camera;
     private Camelot camelot;
     private double masseDesJournaux;
+    private ArrierePlan arrierePlan;
 
 
 
@@ -28,8 +30,11 @@ public class Partie {
 
     Partie() { // On crée les objets pour une partie
         camelot = new Camelot();
-        initialiserObjStatiques();
+        initialiserMaisons();
         masseDesJournaux = determinerMasseJournaux();
+        camera = new Camera(MainJavaFx.WIDTH);
+        arrierePlan = new ArrierePlan();
+
     }
     public void update(double deltaTemps) {
         camelot.update(deltaTemps);
@@ -39,39 +44,45 @@ public class Partie {
 
         creerJournal(); //crée les nouveaux journaux si necessaire
 
-        // Tester les collisions
-        ArrayList<ObjetEnMouvement> journauxASupprimer = new ArrayList<ObjetEnMouvement>();
 
-        for (var objStatique : objetsStatiques) {
+        // Tester les collisions
+        // ArrayList<ObjetEnMouvement> journauxASupprimer = new ArrayList<ObjetEnMouvement>();
+        for (var maison : maisons) {
             Iterator<ObjetEnMouvement> it = journaux.iterator();
             while (it.hasNext()) {
                 ObjetEnMouvement journal = it.next();
 
-                if (testColision(objStatique, journal)) {
-                    it.remove(); // supprime journal de la liste objetsEnMouvement
-                    objStatique.interact(); //va faire l'action que l'objet statique fait selon son type
+                for (var objStatique : maison.getObjetsMaison()) {
+                    if (testColision(objStatique, journal)) {
+                        it.remove(); // supprime journal de la liste objetsEnMouvement
+                        objStatique.interact(); //va faire l'action que l'objet statique fait selon son type
+                    }
                 }
+
             }
 
         }
 
+        camera.suivre(camelot);
 
         //todo Autres : vérifie si on a gagné/perdu, ... ______________________________________________________________________
+
     }
 
     public void draw(GraphicsContext context) { //todo _____________________________
-        /*
-        for (var objStatique : objetsStatiques) {
-            objStatique.draw(context);
+        context.clearRect(0, 0, MainJavaFx.WIDTH, MainJavaFx.HEIGHT);
+
+        arrierePlan.draw(context, camera);
+
+        for (var maison : maisons) {
+            maison.draw(context, camera);
         }
 
         for (var journal : journaux) {
-            journal.draw(context);
+            journal.draw(context, camera);
         }
 
-        camelot.draw(context);
-
-         */
+        camelot.draw(context, camera);
 
     }
 
@@ -84,6 +95,7 @@ public class Partie {
         }
 
     }
+
 
     public boolean testColision(ObjetStatique objStatique, ObjetEnMouvement journal) {
         boolean colision = false;

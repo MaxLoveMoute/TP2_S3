@@ -22,8 +22,9 @@ public class Camera {
         velociteDeCamera = new Point2D(camelot.getVelociteX(), 0);
         positionEnX = camelot.getGauche() - widthEcran * 0.2;
     }
-    public double coordoEcran(double positionCamelotX){
-        return positionCamelotX - positionEnX;
+
+    public double coordoEcran(double positionObjetX){
+        return positionObjetX - positionEnX;
     }
 
 

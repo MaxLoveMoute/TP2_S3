@@ -13,9 +13,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainJavaFx extends Application {
-    public static final double WIDTH = 1600, HEIGHT = 900;
+    public static final double WIDTH = 900, HEIGHT = 580;
     private Stage stage;
-    public boolean enPause = false;
+    public boolean enPause = false;// todo potentiellement a enlever
 
     @Override
     public void start(Stage primaryStage) throws IOException {
