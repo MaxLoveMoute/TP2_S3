@@ -49,6 +49,7 @@ public class Maison implements Drawable {
             objetDeMaison.draw(context, camera);
         }
         porte.draw(context, camera);
+
     }
 
 
