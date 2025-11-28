@@ -5,10 +5,11 @@ import javafx.scene.canvas.GraphicsContext;
 
 public abstract class ObjetStatique extends ObjetDuJeu{
 
-    private boolean AInterragi = false;
+
 
     public ObjetStatique (Point2D position, Point2D taille) {
         super(position, taille);
+
     }
 
 
@@ -27,7 +28,7 @@ public abstract class ObjetStatique extends ObjetDuJeu{
      *
      * À redéfinir dans les sous-classes.
      */
-    public abstract void interact (boolean maisonAbonneeAuJournal);
+    public abstract void interact ();
 
 
 

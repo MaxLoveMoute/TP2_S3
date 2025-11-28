@@ -10,9 +10,12 @@ public class Fenetre extends ObjetStatique {
     private Image fenetreBlanche = new Image("/fenetre.png");
     private Image fenetreRouge  = new Image("/fenetre-brisee-rouge.png");
     private Image fenetreVerte  = new Image("/fenetre-brisee-vert.png");
-    public Fenetre( Point2D position) {
+
+    private boolean maisonAbonner;
+    public Fenetre( Point2D position,boolean maisonAbonner) {
         super(position, new Point2D(159,130));
         fenetreCourante = fenetreBlanche;
+        this.maisonAbonner = maisonAbonner;
     }
 
     @Override
@@ -21,7 +24,7 @@ public class Fenetre extends ObjetStatique {
     }
 
     @Override
-    public void interact(boolean maisonAbonner) {
+    public void interact() {
         if (maisonAbonner) {
             fenetreCourante = fenetreVerte;
         }else{

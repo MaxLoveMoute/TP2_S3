@@ -12,34 +12,34 @@ public class Maison {
     private ArrayList<Fenetre> fenetre;
     private BoiteAuxLettres boiteAuLettre;
 
-    private boolean abonner;
+    private boolean maisonAbonner;
     private Random aleatoire = new Random();
 
     public Maison(Porte porte) {
         this.porte = porte;
         this.fenetre = new ArrayList<>();
 
-        int abonner = aleatoire.nextInt(2);
+        int estIlAbonner = aleatoire.nextInt(2);
 
-        if (abonner == 1) {
-            this.abonner = true;
-        }else{this.abonner = false;}
+        if (estIlAbonner == 1) {
+            this.maisonAbonner = true;
+        }else{this.maisonAbonner= false;}
 
 
         int nbFenetre = aleatoire.nextInt(3);
 
         if (nbFenetre >= 1) {
-            fenetre.add(new Fenetre(new Point2D(porte.getDroite() + 300, 50)));
+            fenetre.add(new Fenetre(new Point2D(porte.getDroite() + 300, 50),maisonAbonner));
         }
 
         if (nbFenetre == 2) {
-            fenetre.add(new Fenetre(new Point2D(porte.getDroite() + 600, 50)));
+            fenetre.add(new Fenetre(new Point2D(porte.getDroite() + 600, 50),maisonAbonner));
         }
 
 
         int valeur = aleatoire.nextInt(51) + 20; // 20 à 70
         this.boiteAuLettre = new BoiteAuxLettres(
-                new Point2D(porte.getDroite() + 200, MainJavaFx.HEIGHT * (valeur / 100.0)));
+                new Point2D(porte.getDroite() + 200, MainJavaFx.HEIGHT * (valeur / 100.0)),maisonAbonner);
     }
 
     public void drawMaison(GraphicsContext context, Camera camera) {
@@ -53,8 +53,8 @@ public class Maison {
 
     public void updateCollisionAvecObjetDeMaison() {
         for (Fenetre f : fenetre) {
-            f.interact(abonner);
+            f.interact();
         }
-        boiteAuLettre.interact(abonner);
+        boiteAuLettre.interact();
     }
 }

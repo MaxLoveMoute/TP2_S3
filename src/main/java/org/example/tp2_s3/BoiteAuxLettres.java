@@ -12,10 +12,13 @@ public class BoiteAuxLettres extends ObjetStatique {
     private Image boiteRouge  = new Image("/boite-aux-lettres-rouge.png");
     private Image boiteVerte  = new Image("/boite-aux-lettres-vert.png");
 
+    private boolean maisonAbonner;
 
-    public BoiteAuxLettres(Point2D position) {
+
+    public BoiteAuxLettres(Point2D position, boolean maisonAbonner) {
         super(position, new Point2D(81, 76));
         this.boiteCourante = boiteBlanche; // image par défaut
+        this.maisonAbonner = maisonAbonner;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class BoiteAuxLettres extends ObjetStatique {
     }
 
     @Override
-    public void interact(boolean maisonAbonner) {
+    public void interact() {
         if (maisonAbonner) {
             boiteCourante = boiteVerte;
         }else{
