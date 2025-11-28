@@ -27,7 +27,7 @@ public abstract class ObjetStatique extends ObjetDuJeu{
      *
      * À redéfinir dans les sous-classes.
      */
-    public abstract void interact ();
+    public abstract void interact (boolean maisonAbonneeAuJournal);
 
 
 

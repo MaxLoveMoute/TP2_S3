@@ -12,7 +12,6 @@ public class BoiteAuxLettres extends ObjetStatique {
     private Image boiteRouge  = new Image("/boite-aux-lettres-rouge.png");
     private Image boiteVerte  = new Image("/boite-aux-lettres-vert.png");
 
-    private int couleurIndex = 0; // 0=blanc, 1=rouge, 2=vert
 
     public BoiteAuxLettres(Point2D position) {
         super(position, new Point2D(81, 76));
@@ -29,8 +28,12 @@ public class BoiteAuxLettres extends ObjetStatique {
     }
 
     @Override
-    public void interact() {
-        // Todo les couleurs et tout
+    public void interact(boolean maisonAbonner) {
+        if (maisonAbonner) {
+            boiteCourante = boiteVerte;
+        }else{
+            boiteCourante = boiteRouge;
+        }
     }
 }
 

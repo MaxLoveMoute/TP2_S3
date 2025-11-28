@@ -21,7 +21,12 @@ public class Fenetre extends ObjetStatique {
     }
 
     @Override
-    public void interact() {
-        //todo (peter la fenetre en gros)
+    public void interact(boolean maisonAbonner) {
+        if (maisonAbonner) {
+            fenetreCourante = fenetreVerte;
+        }else{
+            fenetreCourante = fenetreRouge;
+        }
+
     }
 }

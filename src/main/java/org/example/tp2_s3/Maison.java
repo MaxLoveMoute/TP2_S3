@@ -11,11 +11,19 @@ public class Maison {
     private Porte porte;
     private ArrayList<Fenetre> fenetre;
     private BoiteAuxLettres boiteAuLettre;
+
+    private boolean abonner;
     private Random aleatoire = new Random();
 
     public Maison(Porte porte) {
         this.porte = porte;
         this.fenetre = new ArrayList<>();
+
+        int abonner = aleatoire.nextInt(2);
+
+        if (abonner == 1) {
+            this.abonner = true;
+        }else{this.abonner = false;}
 
 
         int nbFenetre = aleatoire.nextInt(3);
@@ -45,8 +53,8 @@ public class Maison {
 
     public void updateCollisionAvecObjetDeMaison() {
         for (Fenetre f : fenetre) {
-            f.interact();
+            f.interact(abonner);
         }
-        boiteAuLettre.interact();
+        boiteAuLettre.interact(abonner);
     }
 }

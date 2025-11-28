@@ -42,7 +42,7 @@ public class Porte extends ObjetStatique {
 
 
     @Override
-    public void interact() {
+    public void interact(boolean maisonAbonner) {
         //ne interact pas
     }
 }
