@@ -8,13 +8,14 @@ import java.util.Random;
 
 public class Maison implements Drawable {
     private ArrayList<ObjetStatique> objetsMaison = new ArrayList<>();
+
+    private Porte porte;
     private boolean maisonAbonner ;
     private Random aleatoire = new Random();
 
     public Maison(int position, int chiffrePorte) {
 
-
-        objetsMaison.add(new Porte(new Point2D(position,0), chiffrePorte, maisonAbonner));
+        porte = new Porte(new Point2D(position,MainJavaFx.HEIGHT - Porte.HAUTEUR),chiffrePorte,maisonAbonner);
 
         int estIlAbonner = aleatoire.nextInt(2);
 
@@ -47,7 +48,7 @@ public class Maison implements Drawable {
         for (ObjetStatique objetDeMaison : objetsMaison) {
             objetDeMaison.draw(context, camera);
         }
-
+        porte.draw(context, camera);
     }
 
 

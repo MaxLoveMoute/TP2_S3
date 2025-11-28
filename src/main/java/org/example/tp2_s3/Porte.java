@@ -10,6 +10,8 @@ import javafx.scene.text.Font;
 public class Porte extends ObjetStatique {
     public static final int LARGEUR = 143;
 
+    public static final int HAUTEUR = 195;
+
     protected Image imgPorte = new Image("/porte.png");
 
     protected int chiffreDePorte;
@@ -17,7 +19,7 @@ public class Porte extends ObjetStatique {
     protected boolean maisonAbonner;
 
     public Porte(Point2D position, int chiffreDePorte,boolean maisonAbonner) {
-        super(position,new Point2D(LARGEUR, 195));
+        super(position,new Point2D(LARGEUR, HAUTEUR));
         this.chiffreDePorte = chiffreDePorte;
         this.maisonAbonner = maisonAbonner;
     }
@@ -25,18 +27,14 @@ public class Porte extends ObjetStatique {
     @Override
     public void draw(GraphicsContext context, Camera camera) {
 
-        double xEcran = camera.coordoEcran(position.getX());
-        double yEcran = MainJavaFx.HEIGHT - taille.getY();
-
-        // 1. Dessin de l’image
-        context.drawImage(imgPorte, xEcran, yEcran, taille.getX(), taille.getY());
+        context.drawImage(imgPorte, camera.coordoEcran(position.getX()) , position.getY(), taille.getX(), taille.getY());
 
         context.setFill(Color.YELLOW);
         context.setFont(new Font( 40));
 
         // 3. Position centrée
-        double xChiffre = (xEcran + taille.getX() / 2) - 30;  // ajustement au centre
-        double yChiffre = yEcran + 45;
+        double xChiffre = (camera.coordoEcran(position.getX()) + taille.getX() / 2) - 30;  // ajustement au centre
+        double yChiffre =position.getY() + 45;
 
         // 4. Dessin du texte
         context.fillText(String.valueOf(chiffreDePorte), xChiffre, yChiffre);

@@ -46,7 +46,7 @@ public class Inventaire {
         context.fillText(Integer.toString(journal), (115+15)/2, bandeHauteur*0.7);
 
         // Argent
-        context.drawImage(imageArgent, 115, 0);
+        context.drawImage(imageArgent, 115, 4);
         context.fillText(Integer.toString(argent), (115+215)/2 + 10, bandeHauteur*0.7);
 
         // Maison
