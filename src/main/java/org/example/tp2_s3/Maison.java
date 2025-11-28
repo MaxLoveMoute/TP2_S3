@@ -50,11 +50,6 @@ public class Maison implements Drawable {
 
     }
 
-    public void interagirAvecObjetsDeMaison() {
-        for (ObjetStatique objetDeMaison : objetsMaison) {
-            objetDeMaison.interact();
-        }
-    }
 
     public ArrayList<ObjetStatique> getObjetsMaison() {
         return objetsMaison;

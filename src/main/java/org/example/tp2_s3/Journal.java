@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Journal extends ObjetEnMouvement {
-    protected Image imgJournal = new Image("/porte.png");
+    protected Image imgJournal = new Image("/journal.png");
 
     protected static double masse;
 

@@ -29,7 +29,6 @@ public class MainJavaFx extends Application {
 
 
 
-
         var timer = new AnimationTimer() {
             long dernierTemps = System.nanoTime();
             @Override
