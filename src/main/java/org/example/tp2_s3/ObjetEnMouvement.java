@@ -6,31 +6,21 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class ObjetEnMouvement extends ObjetDuJeu {
     // Physique
     protected Point2D velocite;
-    protected Point2D acceleration;
+    protected Point2D acceleration = new Point2D(0, 1500);
 
-    public ObjetEnMouvement(Point2D position, Point2D taille, Point2D velocite, Point2D acceleration) {
+    public ObjetEnMouvement(Point2D position, Point2D taille, Point2D velocite) {
         super(position, taille);
         this.velocite = velocite;
-        this.acceleration = acceleration;
     }
 
-    /**
-     * Met à jour la vitesse selon l'accélération et
-     * la position selon la vitesse.
-     */
-    protected void updatePhysique(double deltaTemps) {
-        velocite = velocite.add(acceleration.multiply(deltaTemps));
-        position = position.add(velocite.multiply(deltaTemps));
-    }
+
 
     /**
      * Par défaut, une nouvelle sous-classe de ObjetDuJeu ne va
      * rien faire d'autre que subir les lois de la physique
      *
      */
-    public void update(double deltaTemps) {
-        updatePhysique(deltaTemps);
-    } //todo ajouter le reste dans chaque classe indiv
+    public abstract void update(double deltaTemps);//todo ajouter le reste dans chaque classe indiv
 
 
 
@@ -43,5 +33,20 @@ public abstract class ObjetEnMouvement extends ObjetDuJeu {
     @Override
     public abstract void draw(GraphicsContext context,Camera camera);
 
+    public Point2D getVelocite() {
+        return velocite;
+    }
+
+    public Point2D getAcceleration() {
+        return acceleration;
+    }
+
+    public void setVelocite(Point2D velocite) {
+        this.velocite = velocite;
+    }
+
+    public void setAcceleration(Point2D acceleration) {
+        this.acceleration = acceleration;
+    }
 }
 

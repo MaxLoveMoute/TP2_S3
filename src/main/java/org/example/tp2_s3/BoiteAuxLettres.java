@@ -11,7 +11,7 @@ public class BoiteAuxLettres extends ObjetStatique{
     }
 
     @Override
-    public void draw(GraphicsContext context) {
+    public void draw(GraphicsContext context, Camera camera) {
         //todo
     }
 

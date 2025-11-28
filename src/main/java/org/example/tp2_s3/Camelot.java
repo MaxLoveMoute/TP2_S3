@@ -15,11 +15,9 @@ public class Camelot extends ObjetEnMouvement {
     protected static KeyCode toucheGauche = KeyCode.LEFT;
     protected static KeyCode toucheDroite = KeyCode.RIGHT;
     protected static KeyCode toucheUP1 = KeyCode.UP;
-
     protected static KeyCode toucheUP2 = KeyCode.SPACE;
 
-    protected static KeyCode toucheLancerJournalVersHaut = KeyCode.Z;
-    protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
+
     protected double TempsTotal = 0;
     protected ImageView CamelotImage;
     protected Image img1 = new Image(getClass().getResourceAsStream("/camelot1.png"));
@@ -27,7 +25,7 @@ public class Camelot extends ObjetEnMouvement {
 
     public Camelot() {
         super(new Point2D(400, MainJavaFx.HEIGHT - 144), new Point2D(174, 144),
-                new Point2D(400, 0), new Point2D(0, 1500));
+                new Point2D(400, 0));
         toucheLeSol = true;
         CamelotImage = new ImageView(img1);
     }
@@ -64,7 +62,6 @@ public class Camelot extends ObjetEnMouvement {
         }
 
 
-
         // Saut
         boolean jump = Input.isKeyPressed(toucheUP2) || Input.isKeyPressed(toucheUP1);
         if (toucheLeSol && jump) {
@@ -75,7 +72,6 @@ public class Camelot extends ObjetEnMouvement {
 
         // Mise à jour de la vélocité et position
         velocite = velocite.add(acceleration.multiply(deltaTemps));
-
         position = position.add(velocite.multiply(deltaTemps));
 
         // Gestion du sol
@@ -84,8 +80,11 @@ public class Camelot extends ObjetEnMouvement {
             velocite = new Point2D(velocite.getX(), 0);
             position = new Point2D(position.getX(), MainJavaFx.HEIGHT - taille.getY());
         }
-
     }
+
+
+
+
 
 
 

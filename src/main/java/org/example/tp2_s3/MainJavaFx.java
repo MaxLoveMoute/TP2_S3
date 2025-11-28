@@ -2,8 +2,10 @@ package org.example.tp2_s3;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -13,6 +15,7 @@ import java.io.IOException;
 public class MainJavaFx extends Application {
     public static final double WIDTH = 1600, HEIGHT = 900;
     private Stage stage;
+    public boolean enPause = false;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -23,10 +26,6 @@ public class MainJavaFx extends Application {
         root.getChildren().add(canvas);
         var context = canvas.getGraphicsContext2D();
         Partie partie = new Partie();
-
-
-
-
 
 
 
@@ -44,7 +43,18 @@ public class MainJavaFx extends Application {
         timer.start();
 
 
-
+        scene.setOnKeyPressed((e) -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+                // Ferme JavaFX
+                Platform.exit();
+            } else {
+                Input.setKeyPressed(e.getCode(), true);
+            }
+            //todo est-ce qu'il faut mettre en pause?????
+        });
+        scene.setOnKeyReleased((e) -> {
+            Input.setKeyPressed(e.getCode(), false);
+        });
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Jeu Camelot");

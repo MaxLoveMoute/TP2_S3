@@ -43,5 +43,9 @@ public abstract class ObjetDuJeu extends Object implements Drawable {
     public double getDroite() {
         return position.getX() + taille.getX();
     }
+    public Point2D getMilieu() {
+        return new Point2D (getGauche()+(taille.getX()/2), getHaut() + (taille.getY()/2));
+    }
+
 
 }
