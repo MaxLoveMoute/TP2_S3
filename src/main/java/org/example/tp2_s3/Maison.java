@@ -8,15 +8,18 @@ import java.util.Random;
 
 public class Maison {
 
-    private Porte porte;
+
     private ArrayList<Fenetre> fenetre;
     private BoiteAuxLettres boiteAuLettre;
+
+    private Porte porte;
+
 
     private boolean maisonAbonner;
     private Random aleatoire = new Random();
 
-    public Maison(Porte porte) {
-        this.porte = porte;
+    public Maison(Point2D position, int chiffrePorte) {
+        this.porte = new Porte(position,chiffrePorte,maisonAbonner);
         this.fenetre = new ArrayList<>();
 
         int estIlAbonner = aleatoire.nextInt(2);
@@ -51,10 +54,11 @@ public class Maison {
         }
     }
 
-    public void updateCollisionAvecObjetDeMaison() {
+    public void interagirAvecObjetsDeMaison(){
         for (Fenetre f : fenetre) {
             f.interact();
         }
         boiteAuLettre.interact();
     }
+
 }

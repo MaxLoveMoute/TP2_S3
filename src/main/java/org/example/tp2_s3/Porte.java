@@ -15,8 +15,8 @@ public class Porte extends ObjetStatique {
 
     protected boolean maisonAbonner;
 
-    public Porte(Point2D position, Point2D taille, int chiffreDePorte,boolean maisonAbonner) {
-        super(position,taille);
+    public Porte(Point2D position, int chiffreDePorte,boolean maisonAbonner) {
+        super(position,new Point2D(143,195));
         this.chiffreDePorte = chiffreDePorte;
         this.maisonAbonner = maisonAbonner;
     }

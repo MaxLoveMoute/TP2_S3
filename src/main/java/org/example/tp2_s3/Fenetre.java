@@ -16,6 +16,7 @@ public class Fenetre extends ObjetStatique {
         super(position, new Point2D(159,130));
         fenetreCourante = fenetreBlanche;
         this.maisonAbonner = maisonAbonner;
+
     }
 
     @Override
