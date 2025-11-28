@@ -11,9 +11,7 @@ import java.util.ArrayList;
 public class Inventaire {
 
     private int journal;
-
     private int argent;
-
     private ArrayList<Integer> numeroPorte;
 
     private Image imageJournal = new Image("/icone-journal.png");
@@ -68,4 +66,7 @@ public class Inventaire {
     }
 
 
+    public int getJournal() {
+        return journal;
+    }
 }

@@ -42,7 +42,6 @@ public class Porte extends ObjetStatique {
 
 
     @Override
-    public void interact() {
-        //ne interact pas
+    public void interact(Inventaire inventaire) {// ne fat rien dans porte
     }
 }

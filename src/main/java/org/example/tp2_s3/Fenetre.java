@@ -25,11 +25,14 @@ public class Fenetre extends ObjetStatique {
     }
 
     @Override
-    public void interact() {
+    public void interact(Inventaire inventaire) {
+        aInteragi = true;
         if (maisonAbonner) {
             fenetreCourante = fenetreRouge;
+            inventaire.additionOuSoustractionDeDollar(-2);
         }else{
             fenetreCourante = fenetreVerte;
+            inventaire.additionOuSoustractionDeDollar(2);
         }
 
     }

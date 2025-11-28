@@ -49,16 +49,17 @@ public class Partie {
 
 
         // Tester les collisions
-        // ArrayList<ObjetEnMouvement> journauxASupprimer = new ArrayList<ObjetEnMouvement>();
         for (var maison : maisons) {
             Iterator<ObjetEnMouvement> it = journaux.iterator();
             while (it.hasNext()) {
                 ObjetEnMouvement journal = it.next();
 
                 for (var objStatique : maison.getObjetsMaison()) {
-                    if (testColision(objStatique, journal)) {
+                    if ( testColision(objStatique, journal)) {
                         it.remove(); // supprime journal de la liste objetsEnMouvement
-                        objStatique.interact(); //va faire l'action que l'objet statique fait selon son type
+                        if ((!objStatique.aInteragi)){
+                            objStatique.interact(inventaire); //va faire l'action que l'objet statique fait selon son type
+                        }
                     }
                 }
 
@@ -66,17 +67,23 @@ public class Partie {
 
         }
 
+        //update l'inventaire
+
+
+
         camera.suivre(camelot);
 
+
         //todo Autres : vérifie si on a gagné/perdu, ... ______________________________________________________________________
+        //checker si il y a 0 journaux left ETTTT 0 dans le tableau journaux
 
     }
+
 
     public void draw(GraphicsContext context) { //todo _____________________________
         context.clearRect(0, 0, MainJavaFx.WIDTH, MainJavaFx.HEIGHT);
 
         arrierePlan.draw(context, camera);
-        inventaire.draw(context);
 
         for (var maison : maisons) {
             maison.draw(context, camera);
@@ -87,6 +94,7 @@ public class Partie {
         }
 
         camelot.draw(context, camera);
+        inventaire.draw(context);
 
     }
 
@@ -146,7 +154,8 @@ public class Partie {
 
 
 
-        if ( (deltaTempsJournal >= 0.5) && (creerHaut || creerBas)) {
+        if ( (deltaTempsJournal >= 0.5) && (creerHaut || creerBas) && (inventaire.getJournal() > 0)) {
+            inventaire.additionOuSoustractionDeJournal(-1);
             Journal j = new Journal(camelot.getMilieu(), camelot.getVelocite(), masseDesJournaux);
             journaux.add(j);
 
@@ -160,6 +169,7 @@ public class Partie {
 
             j.setVelocite(j.getVelocite().add(momentumAAjouter.multiply(1/j.getMasse())));
             dernierTempsJournalCree = maintenant;
+
         }
 
 

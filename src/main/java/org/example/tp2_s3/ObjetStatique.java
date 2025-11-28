@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class ObjetStatique extends ObjetDuJeu{
-
+    protected boolean aInteragi = false;
 
 
     public ObjetStatique (Point2D position, Point2D taille) {
@@ -28,7 +28,7 @@ public abstract class ObjetStatique extends ObjetDuJeu{
      *
      * À redéfinir dans les sous-classes.
      */
-    public abstract void interact ();
+    public abstract void interact (Inventaire inventaire);
 
 
 

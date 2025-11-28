@@ -31,11 +31,14 @@ public class BoiteAuxLettres extends ObjetStatique {
     }
 
     @Override
-    public void interact() {
+    public void interact(Inventaire inventaire) {
+        aInteragi = true;
         if (maisonAbonner) {
             boiteCourante = boiteVerte;
+            inventaire.additionOuSoustractionDeDollar(1);
         }else{
             boiteCourante = boiteRouge;
+            inventaire.additionOuSoustractionDeDollar(-1);
         }
     }
 }
