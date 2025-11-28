@@ -9,8 +9,10 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class Partie {
+
+    Random aleatoire = new Random();
     private ArrayList<ObjetEnMouvement> journaux = new ArrayList<ObjetEnMouvement>();
-    private ArrayList<ObjetStatique> objetsStatiques = new ArrayList<ObjetStatique>();
+    private ArrayList<Maison> maisons = new ArrayList<Maison>();
 
     protected static KeyCode toucheLancerJournalVersHaut = KeyCode.Z;
     protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
@@ -73,8 +75,14 @@ public class Partie {
 
     }
 
-    public void initialiserObjStatiques() {
-        //todo va initialiser les portes, fenetres, etc
+    public void initialiserMaisons() {
+        int chiffrePorte = aleatoire.nextInt(851) + 100;
+
+        for (int i = 1300; i < 13 * 1300; i += 1300) {
+            maisons.add(new Maison(i, chiffrePorte));
+            chiffrePorte += 2;
+        }
+
     }
 
     public boolean testColision(ObjetStatique objStatique, ObjetEnMouvement journal) {

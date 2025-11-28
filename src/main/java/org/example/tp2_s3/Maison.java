@@ -18,43 +18,47 @@ public class Maison {
     private boolean maisonAbonner;
     private Random aleatoire = new Random();
 
-    public Maison(Point2D position, int chiffrePorte) {
-        this.porte = new Porte(position,chiffrePorte,maisonAbonner);
+    public Maison(int position, int chiffrePorte) {
+        this.porte = new Porte(new Point2D(position,0), chiffrePorte, maisonAbonner);
         this.fenetre = new ArrayList<>();
 
         int estIlAbonner = aleatoire.nextInt(2);
 
         if (estIlAbonner == 1) {
             this.maisonAbonner = true;
-        }else{this.maisonAbonner= false;}
+        } else {
+            this.maisonAbonner = false;
+        }
 
 
         int nbFenetre = aleatoire.nextInt(3);
 
         if (nbFenetre >= 1) {
-            fenetre.add(new Fenetre(new Point2D(porte.getDroite() + 300, 50),maisonAbonner));
+            fenetre.add(new Fenetre(new Point2D(porte.getDroite() + 300, 50), maisonAbonner));
         }
 
         if (nbFenetre == 2) {
-            fenetre.add(new Fenetre(new Point2D(porte.getDroite() + 600, 50),maisonAbonner));
+            fenetre.add(new Fenetre(new Point2D(porte.getDroite() + 600, 50), maisonAbonner));
         }
 
 
         int valeur = aleatoire.nextInt(51) + 20; // 20 à 70
         this.boiteAuLettre = new BoiteAuxLettres(
-                new Point2D(porte.getDroite() + 200, MainJavaFx.HEIGHT * (valeur / 100.0)),maisonAbonner);
+                new Point2D(porte.getDroite() + 200, MainJavaFx.HEIGHT * (valeur / 100.0)), maisonAbonner);
     }
 
     public void drawMaison(GraphicsContext context, Camera camera) {
         porte.draw(context, camera);
         boiteAuLettre.draw(context, camera);
 
+
         for (Fenetre f : fenetre) {
             f.draw(context, camera);
         }
+
     }
 
-    public void interagirAvecObjetsDeMaison(){
+    public void interagirAvecObjetsDeMaison() {
         for (Fenetre f : fenetre) {
             f.interact();
         }
