@@ -30,8 +30,10 @@ public class Maison {
             fenetre.draw(context, camera);
         }
     }
-
-    public void updateCollisionAvec(){
-
+    public void updateCollisionAvecObjetDeMaison(){
+        for (Fenetre fenetre : fenetre){
+            fenetre.interact();
+        }
+        boiteAuLettre.interact();
     }
 }
