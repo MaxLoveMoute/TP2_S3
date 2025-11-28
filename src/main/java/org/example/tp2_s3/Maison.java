@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Maison {
+public class Maison implements Drawable {
     private ArrayList<ObjetStatique> objetsMaison = new ArrayList<>();
     private boolean maisonAbonner ;
     private Random aleatoire = new Random();
@@ -41,7 +41,9 @@ public class Maison {
                 new Point2D(position + Porte.LARGEUR + 200, MainJavaFx.HEIGHT * (valeur / 100.0)), maisonAbonner));
     }
 
-    public void drawMaison(GraphicsContext context, Camera camera) {
+
+    @Override
+    public void draw(GraphicsContext context, Camera camera) {
         for (ObjetStatique objetDeMaison : objetsMaison) {
             objetDeMaison.draw(context, camera);
         }
