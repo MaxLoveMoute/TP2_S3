@@ -11,11 +11,15 @@ public class Maison {
 
     private ArrayList<Fenetre> fenetre;
     private BoiteAuxLettres boiteAuLettre;
+    private ArrayList<ObjetStatique> objetsMaison;
+
 
     private Porte porte;
 
-
     private boolean maisonAbonner;
+
+
+
     private Random aleatoire = new Random();
 
     public Maison(int position, int chiffrePorte) {
@@ -65,4 +69,7 @@ public class Maison {
         boiteAuLettre.interact();
     }
 
+    public ArrayList<ObjetStatique> getObjetsMaison() {
+        return objetsMaison;
+    }
 }
