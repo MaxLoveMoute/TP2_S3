@@ -17,11 +17,15 @@ public class Partie {
     protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
     protected static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
 
+    protected static KeyCode toucheActiverDebogage = KeyCode.Q;
+
     private long dernierTempsJournalCree = 0;
     private Camera camera;
     private Camelot camelot;
     private double masseDesJournaux;
     private ArrierePlan arrierePlan;
+
+    private Debogage debogage;
 
     private Inventaire inventaire;
 
@@ -95,7 +99,16 @@ public class Partie {
 
         camelot.draw(context, camera);
         inventaire.draw(context);
+        drawDebogage(context);
+    }
 
+    public void drawDebogage(GraphicsContext context) {
+        boolean activerDebogage = Input.isKeyPressed(toucheActiverDebogage);
+
+        if (activerDebogage) {
+            debogage = new Debogage(maisons, camelot, journaux);
+            debogage.draw(context, camera);
+        }
     }
 
     public void initialiserMaisons() {
