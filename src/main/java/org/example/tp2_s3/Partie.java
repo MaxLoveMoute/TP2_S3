@@ -17,7 +17,7 @@ public class Partie {
     protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
     protected static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
 
-    protected static KeyCode toucheActiverDebogage = KeyCode.Q;
+    protected static KeyCode toucheActiverDebogage = KeyCode.D;
 
     private long dernierTempsJournalCree = 0;
     private Camera camera;
@@ -104,9 +104,8 @@ public class Partie {
 
     public void drawDebogage(GraphicsContext context) {
         boolean activerDebogage = Input.isKeyPressed(toucheActiverDebogage);
-
         if (activerDebogage) {
-            debogage = new Debogage(maisons, camelot, journaux);
+            debogage = new Debogage(maisons,camelot,journaux);
             debogage.draw(context, camera);
         }
     }
