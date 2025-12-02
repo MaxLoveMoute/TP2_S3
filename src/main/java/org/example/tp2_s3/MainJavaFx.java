@@ -21,7 +21,9 @@ import java.io.IOException;
 public class MainJavaFx extends Application {
     public static final int WIDTH = 900, HEIGHT = 580;
     private Stage stage;
-    public boolean enPause = false;// todo potentiellement a enlever
+    private int niveauRendu = 1;
+    private int journauxConserves = 0;
+
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -37,7 +39,6 @@ public class MainJavaFx extends Application {
 
 
 
-
     public Scene sceneAccueil() {
         var root = new StackPane();
         var scene = new Scene(root, WIDTH, HEIGHT);
@@ -48,8 +49,7 @@ public class MainJavaFx extends Application {
         context.fillRect(0, 0, WIDTH, HEIGHT);
         context.setFill(Color.GREEN);
         context.setFont(new Font("Arial", 40));
-        context.fillText("Niveau 1", WIDTH/2, HEIGHT/2);
-        //todo switch le num de lvl
+        context.fillText("Niveau " + niveauRendu, WIDTH/2, HEIGHT/2);
         PauseTransition pause = new PauseTransition(Duration.seconds(5));
         pause.setOnFinished(e -> {
             stage.setScene(sceneJeu());
@@ -61,8 +61,8 @@ public class MainJavaFx extends Application {
 
 
 
-
     public Scene sceneJeu() {
+        Input.reset();
         var root = new Pane();
         var scene = new Scene(root, WIDTH, HEIGHT);
         var canvas = new Canvas(WIDTH, HEIGHT);
@@ -70,7 +70,7 @@ public class MainJavaFx extends Application {
         var context = canvas.getGraphicsContext2D();
 
 
-        Partie partie = new Partie(2);
+        Partie partie = new Partie(niveauRendu, journauxConserves);
 
         var timer = new AnimationTimer() {
             long dernierTemps = System.nanoTime();
@@ -80,6 +80,14 @@ public class MainJavaFx extends Application {
                 partie.update(deltaTemps);
                 partie.draw(context);
                 dernierTemps = temps;
+                if (partie.isTermine()) {
+                    niveauRendu++;
+                    journauxConserves = partie.journauxRestants();
+                    Input.reset();
+                    this.stop();  // arrête l’animation
+                    stage.setScene(sceneAccueil());
+                }
+
             }
         };
         timer.start();

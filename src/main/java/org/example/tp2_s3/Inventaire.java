@@ -10,13 +10,13 @@ import java.util.ArrayList;
 
 public class Inventaire {
 
-    private int journaux;
-    private int argent;
-    private ArrayList<Integer> numeroPorte;
+    protected int journaux;
+    protected int argent;
+    protected ArrayList<Integer> numeroPorte;
 
-    private Image imageJournal = new Image("/icone-journal.png");
-    private Image imageArgent = new Image("/icone-dollar.png");
-    private Image imageMaison = new Image("/icone-maison.png");
+    protected Image imageJournal = new Image("/icone-journal.png");
+    protected Image imageArgent = new Image("/icone-dollar.png");
+    protected Image imageMaison = new Image("/icone-maison.png");
 
 
     public Inventaire(int journal, int argent, ArrayList<Integer> numeroPorte) {

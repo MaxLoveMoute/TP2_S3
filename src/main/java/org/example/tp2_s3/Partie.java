@@ -20,6 +20,13 @@ public class Partie {
     protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
     protected static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
     protected static KeyCode toucheActiverDebogage = KeyCode.D;
+    protected static KeyCode toucheAjouter10Journaux = KeyCode.Q;
+    protected boolean lastToucheAjouter10Journaux = false;
+    protected static KeyCode mettreJournauxAZero = KeyCode.K;
+    protected boolean lastMettreJournauxAZero = false;
+    protected static KeyCode passerProchainNiveau = KeyCode.L;
+    protected boolean lastPasserProchainNiveau = false;
+
 
     protected final int HAUTEUR_NIVEAU = MainJavaFx.HEIGHT;
     protected final int LARGEUR_NIVEAU = 1300 * 13;
@@ -34,15 +41,15 @@ public class Partie {
     private Debogage debogage;
 
     private Inventaire inventaire;
+    public boolean termine = false;
 
 
 
-
-    Partie(int numeroDuNiveau) { // On crée les objets pour une partie
+    Partie(int numeroDuNiveau, int journauxNiveauAvant) { // On crée les objets pour une partie
         numDuNiveau = numeroDuNiveau;
         initialiserParticules();
         camelot = new Camelot();
-        initialiserMaisons();
+        initialiserMaisonsEtInventaire(journauxNiveauAvant);
         masseDesJournaux = determinerMasseJournaux();
         camera = new Camera(MainJavaFx.WIDTH);
         arrierePlan = new ArrierePlan();
@@ -100,22 +107,18 @@ public class Partie {
 
         camera.suivre(camelot);
 
+        //faire les updates de la classe de debug
+        updateDeDebogage();
 
-        //checker si il y a 0 journaux left ETTTT 0 dans le tableau journaux
-        boolean terminer = false;
-        if (inventaire.getJournaux() == 0) {
+        //conditions pour terminer la partie
+        //regarder si il y a 0 journaux ET 0 dans le tableau journaux ou si le camelot a dépassé la fin du niveau
+        if (journauxRestants() == 0) {
             if (journaux.size() == 0) {
-                terminer = true;
+                termine = true;
             }
         } else if (camelot.getDroite() > (LARGEUR_NIVEAU + 600)) {
-            terminer = true;
+            termine = true;
         }
-
-        if (terminer) {
-            //todo terminer le niveau
-        }
-
-
     }
 
 
@@ -142,7 +145,33 @@ public class Partie {
 
     }
 
-    public void drawDebogage(GraphicsContext context) {
+    private void updateDeDebogage() {
+        boolean pressed;
+        // --- Ajouter 10 journaux ---
+        pressed = Input.isKeyPressed(toucheAjouter10Journaux);
+        if (pressed && !lastToucheAjouter10Journaux) {
+            inventaire.journaux += 10;
+        }
+        lastToucheAjouter10Journaux = pressed;
+
+        // --- Mettre les journaux à zéro ---
+        pressed = Input.isKeyPressed(mettreJournauxAZero);
+        if (pressed && !lastMettreJournauxAZero) {
+            inventaire.journaux = 0;
+        }
+        lastMettreJournauxAZero = pressed;
+
+        // --- Passer au prochain niveau ---
+        pressed = Input.isKeyPressed(passerProchainNiveau);
+        if (pressed && !lastPasserProchainNiveau) {
+            termine = true;
+        }
+        lastPasserProchainNiveau = pressed;
+    }
+
+
+
+    private void drawDebogage(GraphicsContext context) {
         boolean activerDebogage = Input.isKeyPressed(toucheActiverDebogage);
         if (activerDebogage) {
             debogage = new Debogage(maisons,camelot,journaux);
@@ -151,7 +180,7 @@ public class Partie {
     }
 
 
-    public void initialiserMaisons() {
+    private void initialiserMaisonsEtInventaire(int journauxNiveauAvant) {
         Random aleatoire = new Random();
         int chiffrePorte = aleatoire.nextInt(851) + 100;
         ArrayList<Integer> numeroDePorteAbonne = new ArrayList<>();
@@ -164,11 +193,11 @@ public class Partie {
             }
             chiffrePorte += 2;
         }
-        inventaire = new Inventaire(12,0,numeroDePorteAbonne);
+        inventaire = new Inventaire(12 + journauxNiveauAvant,0,numeroDePorteAbonne);
     }
 
 
-    public boolean testColision(ObjetStatique objStatique, ObjetEnMouvement journal) {
+    private boolean testColision(ObjetStatique objStatique, ObjetEnMouvement journal) {
         boolean colision = false;
         if ((objStatique.getGauche() <= journal.getDroite()) &&
                 (objStatique.getDroite() >= journal.getGauche()))  {
@@ -181,14 +210,14 @@ public class Partie {
     }
 
 
-    public double determinerMasseJournaux () {
+    private double determinerMasseJournaux () {
         double masse = 1 + Math.random();
         masse = Math.round(masse * 10000) / 10000.0; //permet de garder 4 décimales maximum
         return masse;
     }
 
 
-    public void creerJournal () {
+    private void creerJournal () {
         boolean creerHaut = Input.isKeyPressed(toucheLancerJournalVersHaut);
         boolean creerBas = Input.isKeyPressed(toucheLancerJournalVersBas);
         boolean creerFort = Input.isKeyPressed(toucheLancerJournalFort);
@@ -213,7 +242,7 @@ public class Partie {
     }
 
 
-    public void initialiserParticules () {
+    private void initialiserParticules () {
         int nbParticules = Math.min(((numDuNiveau-1)*30) , 400);
         Random rnd = new Random();
 
@@ -227,16 +256,12 @@ public class Partie {
 
     }
 
-    /*
-    public boolean terminerPartie () {
 
-
+    public boolean isTermine() {
+        return termine;
     }
 
-     */
-
-
-
-
-
+    public int journauxRestants() {
+        return inventaire.getJournaux();
+    }
 }

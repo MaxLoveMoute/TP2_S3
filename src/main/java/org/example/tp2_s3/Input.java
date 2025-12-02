@@ -25,4 +25,10 @@ public class Input {
         else
             touches.remove(code);
     }
+
+    public static void reset() {
+        touches.clear();
+    }
+
+
 }
