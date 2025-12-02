@@ -21,7 +21,7 @@ public class Partie {
     protected static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
     protected static KeyCode toucheActiverDebogage = KeyCode.D;
 
-    protected static KeyCode toucheActiverDebogageFlecheChampElectrique = KeyCode.L;
+    protected static KeyCode toucheActiverDebogageFlecheChampElectrique = KeyCode.F;
 
     protected final int HAUTEUR_NIVEAU = MainJavaFx.HEIGHT;
     protected final int LARGEUR_NIVEAU = 1300 * 13;
