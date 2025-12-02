@@ -1,33 +1,76 @@
 package org.example.tp2_s3;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
 public class MainJavaFx extends Application {
-    public static final double WIDTH = 900, HEIGHT = 580;
+    public static final int WIDTH = 900, HEIGHT = 580;
     private Stage stage;
     public boolean enPause = false;// todo potentiellement a enlever
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         this.stage = primaryStage;
+        primaryStage.setScene(sceneAccueil());
+        primaryStage.setTitle("Jeu Camelot");
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+
+
+
+
+    public Scene sceneAccueil() {
+        var root = new StackPane();
+        var scene = new Scene(root, WIDTH, HEIGHT);
+        var canvas = new Canvas(WIDTH, HEIGHT);
+        root.getChildren().add(canvas);
+        var context = canvas.getGraphicsContext2D();
+        context.setFill(Color.BLACK);
+        context.fillRect(0, 0, WIDTH, HEIGHT);
+        context.setFill(Color.GREEN);
+        context.setFont(new Font("Arial", 40));
+        context.fillText("Niveau 1", WIDTH/2, HEIGHT/2);
+        //todo switch le num de lvl
+        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        pause.setOnFinished(e -> {
+            stage.setScene(sceneJeu());
+        });
+        pause.play();
+
+        return scene;
+    }
+
+
+
+
+    public Scene sceneJeu() {
         var root = new Pane();
         var scene = new Scene(root, WIDTH, HEIGHT);
         var canvas = new Canvas(WIDTH, HEIGHT);
         root.getChildren().add(canvas);
         var context = canvas.getGraphicsContext2D();
-        Partie partie = new Partie();
 
 
+        Partie partie = new Partie(2);
 
         var timer = new AnimationTimer() {
             long dernierTemps = System.nanoTime();
@@ -49,28 +92,13 @@ public class MainJavaFx extends Application {
             } else {
                 Input.setKeyPressed(e.getCode(), true);
             }
-            //todo est-ce qu'il faut mettre en pause?????
         });
         scene.setOnKeyReleased((e) -> {
             Input.setKeyPressed(e.getCode(), false);
         });
 
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Jeu Camelot");
-        primaryStage.show();
-    }
+        return scene;
 
-    public static void main(String[] args) {
-        launch();
-    }
-
-
-    public void sceneAccueil() {
-        //todo changer le stage
-    }
-
-    public void sceneJeux() {
-        //todo changer le stage
     }
 
 

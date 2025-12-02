@@ -3,12 +3,12 @@ package org.example.tp2_s3;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 
 public class Journal extends ObjetEnMouvement {
     protected Image imgJournal = new Image("/journal.png");
 
     protected static double masse;
+    public static final int CHARGE = 900;
 
     public Journal(Point2D position, Point2D vitesse, double masse) {
         super(position, new Point2D(52, 31), vitesse);
@@ -35,4 +35,6 @@ public class Journal extends ObjetEnMouvement {
     public static double getMasse() {
         return masse;
     }
+
+
 }

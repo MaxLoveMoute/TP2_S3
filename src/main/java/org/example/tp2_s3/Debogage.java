@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
         private ArrayList<Maison> maisons;
         private Camelot camelot;
-        private ArrayList<ObjetEnMouvement> journaux;
+        private ArrayList<Journal> journaux;
 
-        public Debogage(ArrayList<Maison> maisons, Camelot camelot, ArrayList<ObjetEnMouvement> journaux) {
+        public Debogage(ArrayList<Maison> maisons, Camelot camelot, ArrayList<Journal> journaux) {
             this.maisons = maisons;
             this.camelot = camelot;
             this.journaux = journaux;

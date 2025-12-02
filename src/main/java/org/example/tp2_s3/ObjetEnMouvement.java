@@ -23,8 +23,6 @@ public abstract class ObjetEnMouvement extends ObjetDuJeu {
     public abstract void update(double deltaTemps);//todo ajouter le reste dans chaque classe indiv
 
 
-
-
     /**
      * Dessine l'objet sur l'écran.
      *

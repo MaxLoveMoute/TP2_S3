@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Inventaire {
 
-    private int journal;
+    private int journaux;
     private int argent;
     private ArrayList<Integer> numeroPorte;
 
@@ -20,7 +20,7 @@ public class Inventaire {
 
 
     public Inventaire(int journal, int argent, ArrayList<Integer> numeroPorte) {
-        this.journal = journal;
+        this.journaux = journal;
         this.argent = argent;
         this.numeroPorte = numeroPorte;
     }
@@ -41,7 +41,7 @@ public class Inventaire {
         // --- 3. Dessiner le texte et les images ---
         // Exemple : journal
         context.drawImage(imageJournal, 15, 0);
-        context.fillText(Integer.toString(journal), (115+15)/2, bandeHauteur*0.7);
+        context.fillText(Integer.toString(journaux), (115+15)/2, bandeHauteur*0.7);
 
         // Argent
         context.drawImage(imageArgent, 115, 4);
@@ -62,11 +62,11 @@ public class Inventaire {
         argent += nbDollar;
     }
     public void additionOuSoustractionDeJournal(int nbJournal){
-        journal += nbJournal;
+        journaux += nbJournal;
     }
 
 
-    public int getJournal() {
-        return journal;
+    public int getJournaux() {
+        return journaux;
     }
 }

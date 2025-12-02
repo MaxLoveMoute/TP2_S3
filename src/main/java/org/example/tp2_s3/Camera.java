@@ -28,7 +28,6 @@ public class Camera {
     }
 
 
-
     public double getVelociteDeCameraX() {
         return velociteDeCamera.getX();
     }
