@@ -8,7 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
  * <p>
  * Un objet statique est un objet fixe dans le monde (non mobile) qui peut
  * être dessiné à l'écran et avec lequel le joueur peut interagir.
- * Cette classe sert de base pour des objets comme {@link Porte}.
+ * Cette classe sert de base pour des objets comme Porte.
  */
 public abstract class ObjetStatique extends ObjetDuJeu {
 

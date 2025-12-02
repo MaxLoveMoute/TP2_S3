@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 /**
  * Classe représentant une porte dans le jeu.
  * <p>
- * Une porte est un objet statique (hérite de {@link ObjetStatique}) qui possède
+ * Une porte est un objet statique (hérite de ObjetStatique) qui possède
  * une image, un numéro et peut appartenir à une maison abonnée.
  */
 public class Porte extends ObjetStatique {
