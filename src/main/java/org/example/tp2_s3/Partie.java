@@ -51,12 +51,15 @@ public class Partie {
 
     private Inventaire inventaire;
 
+    private boolean termine = false;
 
-    Partie(int numeroDuNiveau) { // On crée les objets pour une partie
+
+
+    Partie(int numeroDuNiveau, int journauxConserves) { // On crée les objets pour une partie
         numDuNiveau = numeroDuNiveau;
         initialiserParticules();
         camelot = new Camelot();
-        initialiserMaisons();
+        initialiserMaisons(journauxConserves);
         masseDesJournaux = determinerMasseJournaux();
         camera = new Camera(MainJavaFx.WIDTH);
         arrierePlan = new ArrierePlan();
@@ -115,21 +118,20 @@ public class Partie {
         camera.suivre(camelot);
 
 
-        //checker si il y a 0 journaux left ETTTT 0 dans le tableau journaux
-        boolean terminer = false;
+        //checker si il y a 0 journaux left ETTTT 0 dans le tableau journaux ou qu'on a dépassé la fin du niveau
         if (inventaire.getJournaux() == 0) {
             if (journaux.size() == 0) {
-                terminer = true;
+                termine = true;
             }
         } else if (camelot.getDroite() > (LARGEUR_NIVEAU + 600)) {
-            terminer = true;
+            termine = true;
         }
 
-
+        updateDeDebogage();
     }
 
 
-    public void draw(GraphicsContext context) { //todo _____________________________
+    public void draw(GraphicsContext context) {
         context.clearRect(0, 0, MainJavaFx.WIDTH, MainJavaFx.HEIGHT);
         arrierePlan.draw(context, camera);
 
@@ -153,7 +155,7 @@ public class Partie {
     }
 
 
-    public void updateDeDebogage(GraphicsContext context) {
+    public void updateDeDebogage() {
         boolean pressed;
 
         // --- Ajouter 10 journaux ---
@@ -211,7 +213,6 @@ public class Partie {
 
         toucheEnfonceDebogageFleche = toucheAppuyee;
 
-
         if (modeDebogageFleche) {
 
             for (var particule : particulesChargees ) {
@@ -222,7 +223,6 @@ public class Partie {
                         for (double y = 0; y < MainJavaFx.HEIGHT; y += 50) {
                             var positionMonde = new Point2D(x, y);
                             Point2D positionEcran = new Point2D(camera.coordoEcran(positionMonde.getX()), positionMonde.getY() );
-
 
                             Point2D force = particule.champElectriqueSurUnPoint(positionMonde);
 
@@ -239,7 +239,7 @@ public class Partie {
     }
 
 
-    public void initialiserMaisons() {
+    public void initialiserMaisons(int journauxConserves) {
         Random aleatoire = new Random();
         int chiffrePorte = aleatoire.nextInt(851) + 100;
         ArrayList<Integer> numeroDePorteAbonne = new ArrayList<>();
@@ -252,7 +252,7 @@ public class Partie {
             }
             chiffrePorte += 2;
         }
-        inventaire = new Inventaire(12, 0, numeroDePorteAbonne);
+        inventaire = new Inventaire((12 + journauxConserves), 0, numeroDePorteAbonne);
     }
 
 
@@ -313,6 +313,15 @@ public class Partie {
             particulesChargees.add(p);
         }
 
+    }
+
+    public boolean isTermine() {
+        return termine;
+
+    }
+
+    public int journauxRestants(){
+        return inventaire.getJournaux();
     }
 
 

@@ -50,7 +50,7 @@ public class MainJavaFx extends Application {
         context.fillRect(0, 0, WIDTH, HEIGHT);
         context.setFill(Color.GREEN);
         context.setFont(new Font("Arial", 40));
-        context.fillText("Niveau " + niveauRendu, WIDTH/2, HEIGHT/2);
+        context.fillText("Niveau " + niveauRendu, (WIDTH/2) - 75, HEIGHT/2);
         PauseTransition pause = new PauseTransition(Duration.seconds(5));
         pause.setOnFinished(e -> {
             stage.setScene(sceneJeu());
