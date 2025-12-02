@@ -26,6 +26,7 @@ public class Partie {
     protected final int HAUTEUR_NIVEAU = MainJavaFx.HEIGHT;
     protected final int LARGEUR_NIVEAU = 1300 * 13;
 
+
     private boolean modeDebogage = false;
     private boolean toucheEnfoncee = false;
 
