@@ -107,7 +107,6 @@ public class MainJavaFx extends Application {
         });
 
         return scene;
-
     }
 
 

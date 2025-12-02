@@ -20,6 +20,13 @@ public class Partie {
     protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
     protected static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
     protected static KeyCode toucheActiverDebogage = KeyCode.D;
+    protected static KeyCode toucheAjouter10Journaux = KeyCode.Q;
+    protected boolean lastToucheAjouter10Journaux = false;
+    protected static KeyCode mettreJournauxAZero = KeyCode.K;
+    protected boolean lastMettreJournauxAZero = false;
+    protected static KeyCode passerProchainNiveau = KeyCode.L;
+    protected boolean lastPasserProchainNiveau = false;
+
 
     protected static KeyCode toucheActiverDebogageFlecheChampElectrique = KeyCode.F;
 
@@ -118,10 +125,6 @@ public class Partie {
             terminer = true;
         }
 
-        if (terminer) {
-            //todo terminer le niveau
-        }
-
 
     }
 
@@ -147,7 +150,32 @@ public class Partie {
         drawDebogage(context);
         drawDebogageFlecheChampElectrique(context);
 
+    }
 
+
+    public void updateDeDebogage(GraphicsContext context) {
+        boolean pressed;
+
+        // --- Ajouter 10 journaux ---
+        pressed = Input.isKeyPressed(toucheAjouter10Journaux);
+        if (pressed && !lastToucheAjouter10Journaux) {
+            inventaire.journaux += 10;
+        }
+        lastToucheAjouter10Journaux = pressed;
+
+        // --- Mettre les journaux à zéro ---
+        pressed = Input.isKeyPressed(mettreJournauxAZero);
+        if (pressed && !lastMettreJournauxAZero) {
+            inventaire.journaux = 0;
+        }
+        lastMettreJournauxAZero = pressed;
+
+        // --- Passer au prochain niveau ---
+        pressed = Input.isKeyPressed(passerProchainNiveau);
+        if (pressed && !lastPasserProchainNiveau) {
+            termine = true;
+        }
+        lastPasserProchainNiveau = pressed;
     }
 
 
@@ -286,14 +314,6 @@ public class Partie {
         }
 
     }
-
-    /*
-    public boolean terminerPartie () {
-
-
-    }
-
-     */
 
 
 }
