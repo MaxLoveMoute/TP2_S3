@@ -31,7 +31,7 @@ public class Partie {
     private static KeyCode toucheActiverDebogageFlecheChampElectrique = KeyCode.F;
 
     public final int HAUTEUR_NIVEAU = MainJavaFx.HEIGHT;
-    public final int LARGEUR_NIVEAU = 1300 * 13;
+    public final int LARGEUR_NIVEAU = 1300 * 15;
 
 
     private boolean modeDebogage = false;
@@ -123,7 +123,7 @@ public class Partie {
             if (journaux.size() == 0) {
                 termine = true;
             }
-        } else if (camelot.getDroite() > (LARGEUR_NIVEAU + 600)) {
+        } else if (camelot.getDroite() > (LARGEUR_NIVEAU - 650)) {
             termine = true;
         }
 
@@ -255,7 +255,7 @@ public class Partie {
         int chiffrePorte = aleatoire.nextInt(851) + 100;
         ArrayList<Integer> numeroDePorteAbonne = new ArrayList<>();
 
-        for (int i = 1300; i < LARGEUR_NIVEAU; i += 1300) {
+        for (int i = 1300; i < LARGEUR_NIVEAU - (2*1300); i += 1300) {
             Maison maisonTemps = new Maison(i, chiffrePorte);
             maisons.add(maisonTemps);
             if (maisonTemps.isMaisonAbonner()) {
