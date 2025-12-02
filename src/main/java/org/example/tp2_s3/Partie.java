@@ -22,10 +22,12 @@ public class Partie {
     protected static KeyCode toucheActiverDebogage = KeyCode.D;
     protected static KeyCode toucheAjouter10Journaux = KeyCode.Q;
     protected boolean lastToucheAjouter10Journaux = false;
-    protected static KeyCode mettreJournauxAZero = KeyCode.K;
+    protected static KeyCode toucheMettreJournauxAZero = KeyCode.K;
     protected boolean lastMettreJournauxAZero = false;
-    protected static KeyCode passerProchainNiveau = KeyCode.L;
+    protected static KeyCode touchePasserProchainNiveau = KeyCode.L;
     protected boolean lastPasserProchainNiveau = false;
+    protected static KeyCode toucheParticulesDeTest = KeyCode.I;
+    protected boolean particulesInitiales = true;
 
 
     protected static KeyCode toucheActiverDebogageFlecheChampElectrique = KeyCode.F;
@@ -158,26 +160,32 @@ public class Partie {
     public void updateDeDebogage() {
         boolean pressed;
 
-        // --- Ajouter 10 journaux ---
+        //Ajouter 10 journaux
         pressed = Input.isKeyPressed(toucheAjouter10Journaux);
         if (pressed && !lastToucheAjouter10Journaux) {
             inventaire.journaux += 10;
         }
         lastToucheAjouter10Journaux = pressed;
 
-        // --- Mettre les journaux à zéro ---
-        pressed = Input.isKeyPressed(mettreJournauxAZero);
+        //Mettre les journaux à zéro
+        pressed = Input.isKeyPressed(toucheMettreJournauxAZero);
         if (pressed && !lastMettreJournauxAZero) {
             inventaire.journaux = 0;
         }
         lastMettreJournauxAZero = pressed;
 
-        // --- Passer au prochain niveau ---
-        pressed = Input.isKeyPressed(passerProchainNiveau);
+        //Passer au prochain niveau
+        pressed = Input.isKeyPressed(touchePasserProchainNiveau);
         if (pressed && !lastPasserProchainNiveau) {
             termine = true;
         }
         lastPasserProchainNiveau = pressed;
+
+        pressed = Input.isKeyPressed(toucheParticulesDeTest);
+        if (pressed && particulesInitiales) {
+            particulesInitiales = false;
+            particulesDeTest();
+        }
     }
 
 
@@ -314,6 +322,23 @@ public class Partie {
         }
 
     }
+
+    public void particulesDeTest() {
+        particulesChargees.clear();
+        instancierRangeeTest(10);
+        instancierRangeeTest(HAUTEUR_NIVEAU-10);
+    }
+
+    public void instancierRangeeTest(int hauteur) {
+        for (int i = 0; i < LARGEUR_NIVEAU; i += 50) {
+            particulesChargees.add(new ParticuleChargee(new Point2D(i, hauteur)));
+        }
+
+    }
+
+
+
+
 
     public boolean isTermine() {
         return termine;
