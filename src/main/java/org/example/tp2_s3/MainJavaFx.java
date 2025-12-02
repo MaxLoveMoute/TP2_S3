@@ -29,7 +29,8 @@ public class MainJavaFx extends Application {
     public void start(Stage primaryStage) throws IOException {
         this.stage = primaryStage;
         primaryStage.setScene(sceneAccueil());
-        primaryStage.setTitle("Jeu Camelot");
+        primaryStage.setTitle("Camelot à vélot");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

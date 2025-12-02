@@ -23,7 +23,7 @@ public class ArrierePlan implements Drawable {
         context.fillRect(0,0,WORLD_WIDTH,MainJavaFx.HEIGHT);
 
         int nbX = (int)Math.ceil( WORLD_WIDTH / tailleBrique.getX()) + 2;
-        int nbY = (int)Math.ceil(MainJavaFx.HEIGHT / tailleBrique.getY());
+        int nbY = (int)Math.ceil(MainJavaFx.HEIGHT / tailleBrique.getY())+ 20;
 
         for (int i = 0; i < nbY; i++) {
             for (int j = 0; j < nbX; j++) {

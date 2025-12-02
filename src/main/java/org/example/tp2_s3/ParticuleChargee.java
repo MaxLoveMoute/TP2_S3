@@ -21,8 +21,8 @@ public class ParticuleChargee implements Drawable {
 
     }
 
-    public Point2D champElectriqueSurJournal (Point2D positionMilieuJournal) {
-        Point2D r = positionMilieuJournal.subtract(position);
+    public Point2D champElectriqueSurUnPoint(Point2D positionDuPoint) {
+        Point2D r = positionDuPoint.subtract(position);
         double r2 = r.getX() * r.getX() + r.getY() * r.getY();
 
         //tester si distance trop petite et la mettre a 1 le cas échéant
@@ -51,6 +51,19 @@ public class ParticuleChargee implements Drawable {
     private Color initialiserCouleur() {
         double teinte = Math.random() * 360.0;// random entre 0 et 360
         return Color.hsb(teinte, 1, 1);
+    }
+
+
+    public double getGauche(){
+        return (position.getX() - rayon);
+    }
+
+    public double getHaut(){
+        return (position.getY() + rayon);
+    }
+
+    public double getDroite(){
+        return (position.getX() + rayon);
     }
 
 }
