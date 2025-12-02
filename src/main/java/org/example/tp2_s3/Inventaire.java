@@ -118,4 +118,8 @@ public class Inventaire {
     public int getJournaux() {
         return journaux;
     }
+
+    public int getArgent() {
+        return argent;
+    }
 }

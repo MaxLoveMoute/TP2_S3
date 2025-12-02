@@ -4,10 +4,8 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -23,7 +21,7 @@ public class MainJavaFx extends Application {
     private Stage stage;
     private int niveauRendu = 1;
     private int journauxConserves = 0;
-    private int argentCollecte = 0;
+    private int argentConserves = 0;
 
 
     @Override
@@ -71,7 +69,7 @@ public class MainJavaFx extends Application {
         root.getChildren().add(canvas);
         var context = canvas.getGraphicsContext2D();
 
-        Partie partie = new Partie(niveauRendu, journauxConserves);
+        Partie partie = new Partie(niveauRendu, journauxConserves, argentConserves);
 
         var timer = new AnimationTimer() {
             long dernierTemps = System.nanoTime();
@@ -84,9 +82,15 @@ public class MainJavaFx extends Application {
                 if (partie.isTermine()) {
                     niveauRendu++;
                     journauxConserves = partie.journauxRestants();
+                    argentConserves = partie.argentRestants();
                     Input.reset();
                     this.stop();  // arrête l’animation
-                    stage.setScene(sceneAccueil());
+                    if (journauxConserves == 0) {
+                        stage.setScene(sceneScore());
+                    } else {
+                        stage.setScene(sceneAccueil());
+                    }
+
                 }
 
             }
@@ -126,18 +130,20 @@ public class MainJavaFx extends Application {
         context.fillText("Rupture de stock", (WIDTH/2) - 150, (HEIGHT/2) - 100);
 
         context.setFill(Color.GREEN);
-        context.fillText( "Argent collecté " + argentCollecte + " $" , (WIDTH/2) - 160, (HEIGHT/2) + 100);
+        context.fillText( "Argent collecté " + argentConserves + " $" , (WIDTH/2) - 160, (HEIGHT/2) + 100);
 
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(e -> {
             niveauRendu = 1;
-            argentCollecte = 0;
+            argentConserves = 0;
             stage.setScene(sceneAccueil());
         });
         pause.play();
 
         return scene;
     }
+
+
 
 
 }

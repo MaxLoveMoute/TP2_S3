@@ -16,24 +16,22 @@ public class Partie {
 
     private static int numDuNiveau;
 
-    protected static KeyCode toucheLancerJournalVersHaut = KeyCode.Z;
-    protected static KeyCode toucheLancerJournalVersBas = KeyCode.X;
-    protected static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
-    protected static KeyCode toucheActiverDebogage = KeyCode.D;
-    protected static KeyCode toucheAjouter10Journaux = KeyCode.Q;
-    protected boolean lastToucheAjouter10Journaux = false;
-    protected static KeyCode toucheMettreJournauxAZero = KeyCode.K;
-    protected boolean lastMettreJournauxAZero = false;
-    protected static KeyCode touchePasserProchainNiveau = KeyCode.L;
-    protected boolean lastPasserProchainNiveau = false;
-    protected static KeyCode toucheParticulesDeTest = KeyCode.I;
-    protected boolean particulesInitiales = true;
+    private static KeyCode toucheLancerJournalVersHaut = KeyCode.Z;
+    private static KeyCode toucheLancerJournalVersBas = KeyCode.X;
+    private static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
+    private static KeyCode toucheActiverDebogage = KeyCode.D;
+    private static KeyCode toucheAjouter10Journaux = KeyCode.Q;
+    private boolean lastToucheAjouter10Journaux = false;
+    private static KeyCode toucheMettreJournauxAZero = KeyCode.K;
+    private boolean lastMettreJournauxAZero = false;
+    private static KeyCode touchePasserProchainNiveau = KeyCode.L;
+    private boolean lastPasserProchainNiveau = false;
+    private static KeyCode toucheParticulesDeTest = KeyCode.I;
+    private boolean particulesInitiales = true;
+    private static KeyCode toucheActiverDebogageFlecheChampElectrique = KeyCode.F;
 
-
-    protected static KeyCode toucheActiverDebogageFlecheChampElectrique = KeyCode.F;
-
-    protected final int HAUTEUR_NIVEAU = MainJavaFx.HEIGHT;
-    protected final int LARGEUR_NIVEAU = 1300 * 13;
+    public final int HAUTEUR_NIVEAU = MainJavaFx.HEIGHT;
+    public final int LARGEUR_NIVEAU = 1300 * 13;
 
 
     private boolean modeDebogage = false;
@@ -56,11 +54,12 @@ public class Partie {
     private boolean termine = false;
 
 
-    Partie(int numeroDuNiveau, int journauxConserves) { // On crée les objets pour une partie
+
+    Partie(int numeroDuNiveau, int journauxConserves, int argentConserve) { // On crée les objets pour une partie
         numDuNiveau = numeroDuNiveau;
         initialiserParticules();
         camelot = new Camelot();
-        initialiserMaisons(journauxConserves);
+        initialiserMaisonsEtInventaire(journauxConserves, argentConserve);
         masseDesJournaux = determinerMasseJournaux();
         camera = new Camera(MainJavaFx.WIDTH);
         arrierePlan = new ArrierePlan();
@@ -156,7 +155,7 @@ public class Partie {
     }
 
 
-    public void updateDeDebogage() {
+    private void updateDeDebogage() {
         boolean pressed;
 
         //Ajouter 10 journaux
@@ -188,7 +187,7 @@ public class Partie {
     }
 
 
-    public void drawDebogage(GraphicsContext context) {
+    private void drawDebogage(GraphicsContext context) {
 
         boolean toucheAppuyee = Input.isKeyPressed(toucheActiverDebogage);
 
@@ -210,7 +209,7 @@ public class Partie {
         }
     }
 
-    public void drawDebogageFlecheChampElectrique(GraphicsContext context) {
+    private void drawDebogageFlecheChampElectrique(GraphicsContext context) {
         boolean toucheAppuyee = Input.isKeyPressed(toucheActiverDebogageFlecheChampElectrique);
 
         // Toggle une seule fois
@@ -251,7 +250,7 @@ public class Partie {
     }
 
 
-    public void initialiserMaisons(int journauxConserves) {
+    private void initialiserMaisonsEtInventaire(int journauxConserves, int argentConserve) {
         Random aleatoire = new Random();
         int chiffrePorte = aleatoire.nextInt(851) + 100;
         ArrayList<Integer> numeroDePorteAbonne = new ArrayList<>();
@@ -264,11 +263,11 @@ public class Partie {
             }
             chiffrePorte += 2;
         }
-        inventaire = new Inventaire((12 + journauxConserves), 0, numeroDePorteAbonne);
+        inventaire = new Inventaire((12 + journauxConserves), argentConserve, numeroDePorteAbonne);
     }
 
 
-    public boolean testColision(ObjetStatique objStatique, ObjetEnMouvement journal) {
+    private boolean testColision(ObjetStatique objStatique, ObjetEnMouvement journal) {
         boolean colision = false;
         if ((objStatique.getGauche() <= journal.getDroite()) &&
                 (objStatique.getDroite() >= journal.getGauche())) {
@@ -281,14 +280,14 @@ public class Partie {
     }
 
 
-    public double determinerMasseJournaux() {
+    private double determinerMasseJournaux() {
         double masse = 1 + Math.random();
         masse = Math.round(masse * 10000) / 10000.0; //permet de garder 4 décimales maximum
         return masse;
     }
 
 
-    public void creerJournal() {
+    private void creerJournal() {
         boolean creerHaut = Input.isKeyPressed(toucheLancerJournalVersHaut);
         boolean creerBas = Input.isKeyPressed(toucheLancerJournalVersBas);
         boolean creerFort = Input.isKeyPressed(toucheLancerJournalFort);
@@ -313,7 +312,7 @@ public class Partie {
     }
 
 
-    public void initialiserParticules() {
+    private void initialiserParticules() {
         int nbParticules = Math.min(((numDuNiveau - 1) * 30), 400);
         Random rnd = new Random();
 
@@ -327,13 +326,13 @@ public class Partie {
 
     }
 
-    public void particulesDeTest() {
+    private void particulesDeTest() {
         particulesChargees.clear();
         instancierRangeeTest(10);
         instancierRangeeTest(HAUTEUR_NIVEAU - 10);
     }
 
-    public void instancierRangeeTest(int hauteur) {
+    private void instancierRangeeTest(int hauteur) {
         for (int i = 0; i < LARGEUR_NIVEAU; i += 50) {
             particulesChargees.add(new ParticuleChargee(new Point2D(i, hauteur)));
         }
@@ -348,6 +347,10 @@ public class Partie {
 
     public int journauxRestants() {
         return inventaire.getJournaux();
+    }
+
+    public int argentRestants() {
+        return inventaire.getArgent();
     }
 
 
