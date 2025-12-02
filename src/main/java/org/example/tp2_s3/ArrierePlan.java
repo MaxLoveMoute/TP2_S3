@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 public class ArrierePlan implements Drawable {
 
     /** Largeur totale du monde (en pixels) */
-    private static final double WORLD_WIDTH = 14 * 1300;
+    private static final double WORLD_WIDTH = 15 * 1300;
 
     /** Taille d'une brique individuelle */
     private Point2D tailleBrique = new Point2D(192, 96);
@@ -40,7 +40,7 @@ public class ArrierePlan implements Drawable {
 
         // Nombre de briques à dessiner horizontalement et verticalement
         int nbX = (int) Math.ceil(WORLD_WIDTH / tailleBrique.getX()) + 2;
-        int nbY = (int) Math.ceil(MainJavaFx.HEIGHT / tailleBrique.getY()) + 20;
+        int nbY = (int) Math.ceil(MainJavaFx.HEIGHT / tailleBrique.getY());
 
         // Dessin des briques
         for (int i = 0; i < nbY; i++) {

@@ -119,6 +119,11 @@ public class Inventaire {
         return journaux;
     }
 
+    /**
+     * Retourne le nombre d'argent que le joueur possède
+     *
+     * @return
+     */
     public int getArgent() {
         return argent;
     }
