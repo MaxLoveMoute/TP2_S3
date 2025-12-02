@@ -56,7 +56,6 @@ public class Partie {
     private boolean termine = false;
 
 
-
     Partie(int numeroDuNiveau, int journauxConserves) { // On crée les objets pour une partie
         numDuNiveau = numeroDuNiveau;
         initialiserParticules();
@@ -223,20 +222,24 @@ public class Partie {
 
         if (modeDebogageFleche) {
 
-            for (var particule : particulesChargees ) {
+
+            for (var particule : particulesChargees) {
                 if ((camera.coordoEcran(particule.getDroite()) > 0) && (camera.coordoEcran(particule.getGauche()) < MainJavaFx.WIDTH) &&
                         particule.getHaut() < HAUTEUR_NIVEAU) {
 
                     for (double x = 0; x < LARGEUR_NIVEAU; x += 50) {
-                        for (double y = 0; y < MainJavaFx.HEIGHT; y += 50) {
+                        for (double y = 0; y < HAUTEUR_NIVEAU; y += 50) {
                             var positionMonde = new Point2D(x, y);
-                            Point2D positionEcran = new Point2D(camera.coordoEcran(positionMonde.getX()), positionMonde.getY() );
+                            Point2D positionEcran = new Point2D(camera.coordoEcran(positionMonde.getX()), positionMonde.getY());
 
-                            Point2D force = particule.champElectriqueSurUnPoint(positionMonde);
+                            Point2D forceTotal = new Point2D(0, 0);
+                            for (var particule2 : particulesChargees) {
+                                forceTotal = forceTotal.add(particule2.champElectriqueSurUnPoint(positionMonde));
+                            }
 
                             UtilitairesDessins.dessinerVecteurForce(
                                     positionEcran,
-                                    force,
+                                    forceTotal,
                                     context
                             );
                         }
@@ -244,6 +247,7 @@ public class Partie {
                 }
             }
         }
+
     }
 
 
@@ -326,7 +330,7 @@ public class Partie {
     public void particulesDeTest() {
         particulesChargees.clear();
         instancierRangeeTest(10);
-        instancierRangeeTest(HAUTEUR_NIVEAU-10);
+        instancierRangeeTest(HAUTEUR_NIVEAU - 10);
     }
 
     public void instancierRangeeTest(int hauteur) {
@@ -337,15 +341,12 @@ public class Partie {
     }
 
 
-
-
-
     public boolean isTermine() {
         return termine;
 
     }
 
-    public int journauxRestants(){
+    public int journauxRestants() {
         return inventaire.getJournaux();
     }
 
