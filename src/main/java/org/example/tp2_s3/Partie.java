@@ -21,9 +21,18 @@ public class Partie {
     protected static KeyCode toucheLancerJournalFort = KeyCode.SHIFT;
     protected static KeyCode toucheActiverDebogage = KeyCode.D;
 
+    protected static KeyCode toucheActiverDebogageFlecheChampElectrique = KeyCode.F;
+
     protected final int HAUTEUR_NIVEAU = MainJavaFx.HEIGHT;
     protected final int LARGEUR_NIVEAU = 1300 * 13;
 
+
+    private boolean modeDebogage = false;
+    private boolean toucheEnfoncee = false;
+
+    private boolean toucheEnfonceDebogageFleche = false;
+
+    private boolean modeDebogageFleche = false;
 
     private long dernierTempsJournalCree = 0;
     private Camera camera;
@@ -34,8 +43,6 @@ public class Partie {
     private Debogage debogage;
 
     private Inventaire inventaire;
-
-
 
 
     Partie(int numeroDuNiveau) { // On crée les objets pour une partie
@@ -55,13 +62,13 @@ public class Partie {
         //faire l'update des journaux et des particules chargées
 
         for (var journal : journaux) {
-            Point2D champTotal = new Point2D(0,0);
+            Point2D champTotal = new Point2D(0, 0);
             for (ParticuleChargee particule : particulesChargees) {
-                Point2D champ =  particule.champElectriqueSurJournal(journal.getMilieu());
+                Point2D champ = particule.champElectriqueSurUnPoint(journal.getMilieu());
                 champTotal = champTotal.add(champ);
             }
             Point2D force = champTotal.multiply(Journal.CHARGE);
-            Point2D accelElectrique = force.multiply(1/journal.getMasse());
+            Point2D accelElectrique = force.multiply(1 / journal.getMasse());
             Point2D accelGravitationnel = new Point2D(0, 1500);
             journal.setAcceleration((accelElectrique).add(accelGravitationnel));
             journal.update(deltaTemps);
@@ -78,9 +85,9 @@ public class Partie {
                 ObjetEnMouvement journal = it.next();
 
                 for (var objStatique : maison.getObjetsMaison()) {
-                    if ( testColision(objStatique, journal)) {
+                    if (testColision(objStatique, journal)) {
                         it.remove(); // supprime journal de la liste objetsEnMouvement
-                        if ((!objStatique.aInteragi)){
+                        if ((!objStatique.aInteragi)) {
                             objStatique.interact(inventaire); //va faire l'action que l'objet statique fait selon son type
                         }
                     }
@@ -93,7 +100,7 @@ public class Partie {
         //clear journaux hors screen
         for (var journal : journaux) {
             if ((camera.coordoEcran(journal.getDroite()) < 0) || (camera.coordoEcran(journal.getGauche()) > MainJavaFx.WIDTH) ||
-                    journal.getHaut() > HAUTEUR_NIVEAU ) {
+                    journal.getHaut() > HAUTEUR_NIVEAU) {
                 journaux.remove(journal);
             }
         }
@@ -138,15 +145,68 @@ public class Partie {
         camelot.draw(context, camera);
         inventaire.draw(context);
         drawDebogage(context);
+        drawDebogageFlecheChampElectrique(context);
 
 
     }
 
+
     public void drawDebogage(GraphicsContext context) {
-        boolean activerDebogage = Input.isKeyPressed(toucheActiverDebogage);
-        if (activerDebogage) {
-            debogage = new Debogage(maisons,camelot,journaux);
+
+        boolean toucheAppuyee = Input.isKeyPressed(toucheActiverDebogage);
+
+        // Déclenche le toggle UNE SEULE FOIS par pression
+        if (toucheAppuyee && !toucheEnfoncee) {
+            modeDebogage = !modeDebogage;
+        }
+
+
+        // Mémoriser l'état pour éviter répétition
+        toucheEnfoncee = toucheAppuyee;
+
+        // Si mode débogage activé
+        if (modeDebogage) {
+            if (debogage == null) {
+                debogage = new Debogage(maisons, camelot, journaux);
+            }
             debogage.draw(context, camera);
+        }
+    }
+
+    public void drawDebogageFlecheChampElectrique(GraphicsContext context) {
+        boolean toucheAppuyee = Input.isKeyPressed(toucheActiverDebogageFlecheChampElectrique);
+
+        // Toggle une seule fois
+        if (toucheAppuyee && !toucheEnfonceDebogageFleche) {
+            modeDebogageFleche = !modeDebogageFleche;
+        }
+
+        toucheEnfonceDebogageFleche = toucheAppuyee;
+
+
+        if (modeDebogageFleche) {
+
+            for (var particule : particulesChargees ) {
+                if ((camera.coordoEcran(particule.getDroite()) > 0) && (camera.coordoEcran(particule.getGauche()) < MainJavaFx.WIDTH) &&
+                        particule.getHaut() < HAUTEUR_NIVEAU) {
+
+                    for (double x = 0; x < LARGEUR_NIVEAU; x += 50) {
+                        for (double y = 0; y < MainJavaFx.HEIGHT; y += 50) {
+                            var positionMonde = new Point2D(x, y);
+                            Point2D positionEcran = new Point2D(camera.coordoEcran(positionMonde.getX()), positionMonde.getY() );
+
+
+                            Point2D force = particule.champElectriqueSurUnPoint(positionMonde);
+
+                            UtilitairesDessins.dessinerVecteurForce(
+                                    positionEcran,
+                                    force,
+                                    context
+                            );
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -157,21 +217,21 @@ public class Partie {
         ArrayList<Integer> numeroDePorteAbonne = new ArrayList<>();
 
         for (int i = 1300; i < LARGEUR_NIVEAU; i += 1300) {
-            Maison maisonTemps = new Maison(i,chiffrePorte);
+            Maison maisonTemps = new Maison(i, chiffrePorte);
             maisons.add(maisonTemps);
-            if(maisonTemps.isMaisonAbonner()){
+            if (maisonTemps.isMaisonAbonner()) {
                 numeroDePorteAbonne.add(chiffrePorte);
             }
             chiffrePorte += 2;
         }
-        inventaire = new Inventaire(12,0,numeroDePorteAbonne);
+        inventaire = new Inventaire(12, 0, numeroDePorteAbonne);
     }
 
 
     public boolean testColision(ObjetStatique objStatique, ObjetEnMouvement journal) {
         boolean colision = false;
         if ((objStatique.getGauche() <= journal.getDroite()) &&
-                (objStatique.getDroite() >= journal.getGauche()))  {
+                (objStatique.getDroite() >= journal.getGauche())) {
             if ((objStatique.getHaut() <= journal.getBas()) &&
                     (objStatique.getBas() >= journal.getHaut())) {
                 colision = true;
@@ -181,14 +241,14 @@ public class Partie {
     }
 
 
-    public double determinerMasseJournaux () {
+    public double determinerMasseJournaux() {
         double masse = 1 + Math.random();
         masse = Math.round(masse * 10000) / 10000.0; //permet de garder 4 décimales maximum
         return masse;
     }
 
 
-    public void creerJournal () {
+    public void creerJournal() {
         boolean creerHaut = Input.isKeyPressed(toucheLancerJournalVersHaut);
         boolean creerBas = Input.isKeyPressed(toucheLancerJournalVersBas);
         boolean creerFort = Input.isKeyPressed(toucheLancerJournalFort);
@@ -196,31 +256,31 @@ public class Partie {
         long maintenant = System.nanoTime();
         double deltaTempsJournal = (maintenant - dernierTempsJournalCree) * 1e-9;
 
-        if ( (deltaTempsJournal >= 0.5) && (creerHaut || creerBas) && (inventaire.getJournaux() > 0)) {
+        if ((deltaTempsJournal >= 0.5) && (creerHaut || creerBas) && (inventaire.getJournaux() > 0)) {
             inventaire.additionOuSoustractionDeJournal(-1);
             Journal j = new Journal(camelot.getMilieu(), camelot.getVelocite(), masseDesJournaux);
             journaux.add(j);
-            Point2D momentumAAjouter = new Point2D(900,-900);
+            Point2D momentumAAjouter = new Point2D(900, -900);
             if (creerBas) {
-                momentumAAjouter = new Point2D(150,-1100);
+                momentumAAjouter = new Point2D(150, -1100);
             }
             if (creerFort) {
                 momentumAAjouter = momentumAAjouter.multiply(1.5);
             }
-            j.setVelocite(j.getVelocite().add(momentumAAjouter.multiply(1/j.getMasse())));
+            j.setVelocite(j.getVelocite().add(momentumAAjouter.multiply(1 / j.getMasse())));
             dernierTempsJournalCree = maintenant;
         }
     }
 
 
-    public void initialiserParticules () {
-        int nbParticules = Math.min(((numDuNiveau-1)*30) , 400);
+    public void initialiserParticules() {
+        int nbParticules = Math.min(((numDuNiveau - 1) * 30), 400);
         Random rnd = new Random();
 
         for (int i = 0; i < nbParticules; i++) {
             int posX = rnd.nextInt(LARGEUR_NIVEAU);
             int posY = rnd.nextInt(HAUTEUR_NIVEAU);
-            Point2D position = new Point2D(posX,posY);
+            Point2D position = new Point2D(posX, posY);
             ParticuleChargee p = new ParticuleChargee(position);
             particulesChargees.add(p);
         }
@@ -234,9 +294,6 @@ public class Partie {
     }
 
      */
-
-
-
 
 
 }
