@@ -23,6 +23,7 @@ public class MainJavaFx extends Application {
     private Stage stage;
     private int niveauRendu = 1;
     private int journauxConserves = 0;
+    private int argentCollecte = 0;
 
 
     @Override
@@ -51,7 +52,7 @@ public class MainJavaFx extends Application {
         context.setFill(Color.GREEN);
         context.setFont(new Font("Arial", 40));
         context.fillText("Niveau " + niveauRendu, (WIDTH/2) - 75, HEIGHT/2);
-        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(e -> {
             stage.setScene(sceneJeu());
         });
@@ -69,7 +70,6 @@ public class MainJavaFx extends Application {
         var canvas = new Canvas(WIDTH, HEIGHT);
         root.getChildren().add(canvas);
         var context = canvas.getGraphicsContext2D();
-
 
         Partie partie = new Partie(niveauRendu, journauxConserves);
 
@@ -105,6 +105,36 @@ public class MainJavaFx extends Application {
         scene.setOnKeyReleased((e) -> {
             Input.setKeyPressed(e.getCode(), false);
         });
+
+        return scene;
+    }
+
+
+
+    public Scene sceneScore() {
+        var root = new StackPane();
+        var scene = new Scene(root, WIDTH, HEIGHT);
+        var canvas = new Canvas(WIDTH, HEIGHT);
+        root.getChildren().add(canvas);
+        var context = canvas.getGraphicsContext2D();
+        context.setFill(Color.BLACK);
+        context.fillRect(0, 0, WIDTH, HEIGHT);
+
+        context.setFont(new Font("Arial", 40));
+
+        context.setFill(Color.RED);
+        context.fillText("Rupture de stock", (WIDTH/2) - 150, (HEIGHT/2) - 100);
+
+        context.setFill(Color.GREEN);
+        context.fillText( "Argent collecté " + argentCollecte + " $" , (WIDTH/2) - 160, (HEIGHT/2) + 100);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        pause.setOnFinished(e -> {
+            niveauRendu = 1;
+            argentCollecte = 0;
+            stage.setScene(sceneAccueil());
+        });
+        pause.play();
 
         return scene;
     }
