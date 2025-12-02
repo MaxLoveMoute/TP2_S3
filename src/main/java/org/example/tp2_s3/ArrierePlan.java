@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 public class ArrierePlan implements Drawable {
 
     /** Largeur totale du monde (en pixels) */
-    private static final double WORLD_WIDTH = 16 * 1300;
+    private static final double WORLD_WIDTH = 15 * 1300;
 
     /** Taille d'une brique individuelle */
     private Point2D tailleBrique = new Point2D(192, 96);
